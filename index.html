@@ -15,15 +15,18 @@ html,body{width:100%;height:100%;overflow:hidden;background:#0d1f35;font-family:
 .final-badge{background:#7a1a00;border:1px solid #e63300;border-radius:8px;color:#ff6644;font-size:8px;font-weight:700;padding:2px 7px;display:none;}
 .final-badge.on{display:block;animation:pulse 1s infinite;}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* ERA BAR */
 .era-bar{background:#0a1825;display:flex;flex-direction:column;gap:2px;padding:3px 10px;border-bottom:1px solid rgba(240,180,41,0.2);flex-shrink:0;}
 .era-row{display:flex;align-items:center;gap:6px;}
 .era-name{font-size:10px;color:#f0b429;font-weight:700;flex:1;}
 .era-next{font-size:8px;color:#6a8aaa;}
-.era-pw{flex:1;height:6px;background:rgba(255,255,255,0.1);border-radius:3px;overflow:hidden;}
-.era-pf{height:100%;background:linear-gradient(90deg,#c9952a,#f0b429);border-radius:3px;transition:width .4s;}
-.era-pct{font-size:9px;color:#f0b429;font-weight:700;min-width:28px;text-align:right;}
-.era-hint{font-size:7px;color:#4a7a4a;flex:1;}
+.era-pw{flex:1;height:5px;background:rgba(255,255,255,0.1);border-radius:3px;overflow:hidden;}
+.era-pf{height:100%;background:linear-gradient(90deg,#2980b9,#5dade2);border-radius:3px;transition:width .4s;}
+.era-pct{font-size:9px;color:#5dade2;font-weight:700;min-width:28px;text-align:right;}
 .bonus-badge{font-size:7px;color:#f0b429;background:rgba(240,180,41,0.15);border:1px solid rgba(240,180,41,0.3);border-radius:6px;padding:1px 5px;}
+
+/* POP BAR */
 .pop-bar{background:#0a1825;display:flex;align-items:center;gap:6px;padding:3px 10px;border-bottom:1px solid rgba(255,255,255,0.08);flex-shrink:0;}
 .pop-side{display:flex;flex-direction:column;align-items:center;min-width:50px;}
 .pop-val{font-size:11px;font-weight:800;line-height:1;}
@@ -33,33 +36,43 @@ html,body{width:100%;height:100%;overflow:hidden;background:#0d1f35;font-family:
 .pop-fill-p{height:100%;border-radius:4px 0 0 4px;transition:width .4s;}
 .pop-fill-a{position:absolute;right:0;top:0;height:100%;border-radius:0 4px 4px 0;transition:width .4s;}
 .pop-goal{font-size:7px;color:#6a8aaa;text-align:center;}
+
+/* RESOURCES */
 .res-bar{background:#071525;display:flex;align-items:center;padding:3px 6px;border-bottom:1px solid rgba(255,255,255,0.06);flex-shrink:0;gap:2px;}
 .res{display:flex;flex-direction:column;align-items:center;flex:1;}
 .ri{font-size:11px;line-height:1.2;}.rv{font-size:10px;font-weight:800;color:#f0b429;line-height:1;}
 .rr{font-size:7px;color:#5a9;}.rr.neg{color:#e05;}.rn{font-size:6px;color:#6a8aaa;text-transform:uppercase;}
 .rdiv{width:1px;height:26px;background:rgba(255,255,255,0.08);}
-.mbar{background:#0a1825;display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid rgba(255,255,255,0.06);flex-shrink:0;}
-.met{display:flex;flex-direction:column;align-items:center;padding:2px;border-right:1px solid rgba(255,255,255,0.06);}.met:last-child{border-right:none;}
-.mi{font-size:9px;}.mb{width:80%;height:3px;background:rgba(255,255,255,0.08);border-radius:2px;overflow:hidden;margin:1px 0;}
-.mf{height:100%;border-radius:2px;transition:width .3s;}.mv{font-size:8px;color:#f0b429;font-weight:700;}.mn{font-size:6px;color:#6a8aaa;text-transform:uppercase;}
+
+/* GLOBAL METRICS */
 .global-bar{background:#071020;display:flex;flex-direction:column;gap:2px;padding:3px 10px;border-bottom:1px solid rgba(255,255,255,0.08);flex-shrink:0;}
 .global-row{display:flex;align-items:center;gap:6px;}
-.global-lbl{font-size:7px;color:#6a8aaa;min-width:50px;text-transform:uppercase;}
+.global-lbl{font-size:7px;color:#6a8aaa;min-width:54px;text-transform:uppercase;}
 .global-track,.infl-track{flex:1;height:5px;background:rgba(255,255,255,0.07);border-radius:3px;overflow:hidden;position:relative;}
-.env-fill{height:100%;border-radius:3px;transition:width .4s;}
+.gfill{height:100%;border-radius:3px;transition:width .4s;}
 .infl-p{position:absolute;left:0;top:0;height:100%;transition:width .4s;}
 .infl-a{position:absolute;right:0;top:0;height:100%;transition:width .4s;}
 .infl-mid{position:absolute;left:50%;top:0;width:1px;height:100%;background:rgba(255,255,255,0.3);}
 .global-val{font-size:7px;min-width:28px;text-align:right;font-weight:700;}
+
+/* AP */
 .ap-bar{background:#071525;display:flex;align-items:center;justify-content:center;gap:6px;padding:3px;border-bottom:1px solid rgba(255,255,255,0.06);flex-shrink:0;}
 .ap-dot{width:10px;height:10px;border-radius:50%;background:#f0b429;border:1.5px solid #f0b429;box-shadow:0 0 4px rgba(240,180,41,0.5);}
 .ap-dot.used{background:transparent;box-shadow:none;opacity:0.2;}.ap-txt{font-size:8px;color:#8ab;}
+
+/* LEGEND */
 .legend{display:flex;gap:8px;justify-content:center;padding:2px 0;background:#071525;border-bottom:1px solid rgba(255,255,255,0.05);flex-shrink:0;}
 .leg-item{display:flex;align-items:center;gap:3px;font-size:6px;color:#8ab;}.leg-dot{width:8px;height:8px;border-radius:2px;}
+
+/* MAP */
 #map-wrap{flex:1;background:#0d1f35;overflow:hidden;min-height:0;}
 #map-wrap canvas{display:block;width:100%;height:100%;}
+
+/* INFO */
 .info-bar{background:#071525;padding:3px 10px;border-top:1px solid rgba(255,255,255,0.08);flex-shrink:0;display:flex;align-items:center;gap:6px;min-height:24px;}
 .iname{font-size:10px;font-weight:600;color:#f0b429;flex:1;}.idet{font-size:8px;color:#8ab;}.ires{font-size:9px;color:#ccc;display:flex;gap:4px;}
+
+/* ACTIONS */
 .act-bar{background:#071525;border-top:2px solid rgba(240,180,41,0.2);flex-shrink:0;}
 .act-row{display:flex;}
 .ab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:5px 1px;border:none;background:transparent;color:#aac;cursor:pointer;border-right:1px solid rgba(255,255,255,0.05);position:relative;}
@@ -67,6 +80,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:#0d1f35;font-family:
 .ab .ic{font-size:14px;line-height:1;}.ab .lb{font-size:6px;text-align:center;line-height:1.2;color:#aac;}
 .ab .ac{position:absolute;top:2px;right:2px;font-size:6px;color:#f0b429;font-weight:700;}
 .end-b{background:#071a07;}.end-b .lb{color:#4a9e44;}
+
+/* MODALS */
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;z-index:200;}
 .overlay.on{display:flex;}
 .modal{background:#0d1f35;border:2px solid #f0b429;border-radius:12px;padding:18px 14px;max-width:290px;width:88%;text-align:center;}
@@ -75,7 +90,23 @@ html,body{width:100%;height:100%;overflow:hidden;background:#0d1f35;font-family:
 .modal .fx{background:rgba(255,255,255,0.04);border-radius:5px;padding:6px;margin-bottom:8px;text-align:left;font-size:10px;display:flex;flex-direction:column;gap:2px;}
 .fb{color:#e74c3c;}.fg{color:#2ecc71;}
 .modal button{width:100%;padding:9px;background:#f0b429;border:none;border-radius:7px;color:#071525;font-size:12px;font-weight:800;cursor:pointer;margin-top:4px;}
-/* PATH CHOICE MODAL */
+
+/* BUILD MODAL */
+.build-modal{background:#0d1f35;border:2px solid #f0b429;border-radius:12px;padding:14px 12px;max-width:310px;width:90%;max-height:80vh;overflow-y:auto;}
+.build-title{font-size:12px;font-weight:800;color:#f0b429;margin-bottom:3px;}
+.build-sub{font-size:9px;color:#6a8aaa;margin-bottom:8px;}
+.build-section{font-size:8px;color:#aac;text-transform:uppercase;letter-spacing:.05em;margin:6px 0 3px;}
+.build-btn{width:100%;display:flex;align-items:center;gap:8px;padding:7px 8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:7px;cursor:pointer;margin-bottom:4px;text-align:left;color:#fff;}
+.build-btn:disabled{opacity:0.25;cursor:not-allowed;}
+.build-btn.owned{border-color:rgba(240,180,41,0.4);background:rgba(240,180,41,0.06);}
+.build-btn .b-icon{font-size:16px;flex-shrink:0;}
+.build-btn .b-info{flex:1;}
+.build-btn .b-name{font-size:10px;font-weight:700;color:#f0b429;}
+.build-btn .b-eff{font-size:8px;color:#2ecc71;margin-top:1px;}
+.build-btn .b-cost{font-size:8px;color:#8ab;margin-top:1px;}
+.build-cancel{width:100%;padding:8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:7px;color:#aac;font-size:11px;cursor:pointer;margin-top:4px;}
+
+/* PATH MODAL */
 .path-modal{background:#0d1f35;border:2px solid #f0b429;border-radius:12px;padding:16px 12px;max-width:310px;width:90%;}
 .path-title{font-size:13px;font-weight:800;color:#f0b429;text-align:center;margin-bottom:4px;}
 .path-sub{font-size:9px;color:#6a8aaa;text-align:center;margin-bottom:10px;}
@@ -88,6 +119,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:#0d1f35;font-family:
 .path-btn .p-bonus{font-size:9px;color:#2ecc71;margin-top:1px;}
 .path-btn .p-req{font-size:8px;color:#8ab;margin-top:2px;}
 .path-btn .p-status{font-size:8px;font-weight:700;flex-shrink:0;}
+
+/* WIN */
 .win-modal{background:#0d1f35;border:3px solid #f0b429;border-radius:14px;padding:20px 14px;max-width:280px;width:88%;text-align:center;}
 .win-modal .wi{font-size:40px;margin-bottom:6px;}.win-modal h2{font-size:16px;font-weight:800;color:#f0b429;margin-bottom:4px;}
 .win-modal p{font-size:10px;color:#aac;margin-bottom:10px;}
@@ -95,11 +128,13 @@ html,body{width:100%;height:100%;overflow:hidden;background:#0d1f35;font-family:
 .score-box{flex:1;background:rgba(255,255,255,0.05);border-radius:6px;padding:7px;}
 .score-box .sc{font-size:8px;color:#8ab;margin-bottom:2px;}.score-box .sn{font-size:16px;font-weight:800;}.score-box .su{font-size:7px;color:#8ab;}
 .win-modal .play-btn{width:100%;padding:9px;background:#f0b429;border:none;border-radius:7px;color:#071525;font-size:12px;font-weight:800;cursor:pointer;}
+
 .toast{position:fixed;bottom:70px;left:50%;transform:translateX(-50%);background:#071525;border:1px solid #f0b429;border-radius:12px;padding:5px 12px;font-size:10px;color:#f0b429;z-index:400;opacity:0;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center;}
 .toast.show{opacity:1;}
 </style>
 </head>
 <body>
+
 <div class="hdr">
   <div class="hdr-title">SAPIENS</div>
   <div class="hdr-right">
@@ -108,17 +143,22 @@ html,body{width:100%;height:100%;overflow:hidden;background:#0d1f35;font-family:
     <button class="new-btn" onclick="newGame()">⟳ New</button>
   </div>
 </div>
+
+<!-- ERA + SCIENCE -->
 <div class="era-bar">
   <div class="era-row">
     <div class="era-name" id="era-name">🌿 Prehistoric</div>
     <div class="era-next" id="era-next"></div>
-    <div class="era-pct" id="era-pct">0%</div>
-  </div>
-  <div class="era-row">
-    <div class="era-pw"><div class="era-pf" id="era-pf" style="width:0%"></div></div>
     <div class="bonus-badge" id="bonus-badge" style="display:none"></div>
   </div>
+  <div class="era-row">
+    <div style="font-size:7px;color:#5dade2;min-width:54px;">🔬 Science</div>
+    <div class="era-pw"><div class="era-pf" id="sci-pf" style="width:0%"></div></div>
+    <div class="era-pct" id="sci-pct">0/50</div>
+  </div>
 </div>
+
+<!-- POPULATION RACE -->
 <div class="pop-bar">
   <div class="pop-side"><div class="pop-val" id="pop-p" style="color:#4a9eff">10</div><div class="pop-lbl" id="pop-p-lbl" style="color:#4a9eff">You</div></div>
   <div class="pop-mid">
@@ -127,23 +167,25 @@ html,body{width:100%;height:100%;overflow:hidden;background:#0d1f35;font-family:
   </div>
   <div class="pop-side"><div class="pop-val" id="pop-a" style="color:#e05030">10</div><div class="pop-lbl" id="pop-a-lbl" style="color:#e05030">Them</div></div>
 </div>
+
+<!-- RESOURCES -->
 <div class="res-bar">
-  <div class="res"><div class="ri">🌾</div><div class="rv" id="r-food">3</div><div class="rr" id="r-food-r">+1/t</div><div class="rn">Food</div></div>
+  <div class="res"><div class="ri">🌾</div><div class="rv" id="r-food">10</div><div class="rr" id="r-food-r">+2/t</div><div class="rn">Food</div></div>
   <div class="rdiv" id="res-wealth-div"></div>
-  <div class="res" id="res-wealth-block"><div class="ri">💰</div><div class="rv" id="r-wealth">3</div><div class="rr" id="r-wealth-r">+0/t</div><div class="rn">Wealth</div></div>
+  <div class="res" id="res-wealth-block"><div class="ri">💰</div><div class="rv" id="r-wealth">0</div><div class="rr" id="r-wealth-r">+0/t</div><div class="rn">Wealth</div></div>
   <div class="rdiv"></div>
-  <div class="res"><div class="ri">⚡</div><div class="rv" id="r-energy">2</div><div class="rr" id="r-energy-r">+0/t</div><div class="rn">Energy</div></div>
+  <div class="res"><div class="ri">⚡</div><div class="rv" id="r-energy">6</div><div class="rr" id="r-energy-r">+1/t</div><div class="rn">Energy</div></div>
+  <div class="rdiv"></div>
+  <div class="res"><div class="ri">🔬</div><div class="rv" id="r-sci">0</div><div class="rr" id="r-sci-r">+0/t</div><div class="rn">Science</div></div>
   <div class="rdiv"></div>
   <div class="res"><div class="ri">🏘️</div><div class="rv" id="r-cap">0</div><div class="rr">cap</div><div class="rn">Capacity</div></div>
 </div>
-<div class="mbar">
-  <div class="met"><div class="mi">⚔️</div><div class="mb"><div class="mf" id="m-mil" style="width:5%;background:#c0392b"></div></div><div class="mv" id="v-mil">5</div><div class="mn">Military</div></div>
-  <div class="met"><div class="mi">🏛️</div><div class="mb"><div class="mf" id="m-sta" style="width:80%;background:#27ae60"></div></div><div class="mv" id="v-sta">80</div><div class="mn">Stability</div></div>
-</div>
+
+<!-- GLOBAL METRICS -->
 <div class="global-bar">
   <div class="global-row">
     <div class="global-lbl">🌡️ Environ.</div>
-    <div class="global-track"><div class="env-fill" id="env-fill" style="width:100%;background:#2d7a27"></div></div>
+    <div class="global-track"><div class="gfill" id="env-fill" style="width:100%;background:#2d7a27"></div></div>
     <div class="global-val" id="env-val" style="color:#4a9e44">100</div>
   </div>
   <div class="global-row">
@@ -155,27 +197,33 @@ html,body{width:100%;height:100%;overflow:hidden;background:#0d1f35;font-family:
     </div>
     <div class="global-val" id="infl-val" style="color:#aac">50/50</div>
   </div>
+  <div class="global-row">
+    <div class="global-lbl" style="color:#27ae60">🏛️ Stability</div>
+    <div class="global-track"><div class="gfill" id="sta-fill" style="width:80%;background:#27ae60"></div></div>
+    <div class="global-val" id="v-sta" style="color:#27ae60">80</div>
+  </div>
 </div>
-<div class="ap-bar">
-  <div class="ap-dot" id="ap1"></div><div class="ap-dot" id="ap2"></div><div class="ap-dot" id="ap3"></div>
-  <div class="ap-txt" id="ap-txt">3 actions left</div>
-</div>
+
+<!-- AP -->
+
+
+<!-- LEGEND -->
 <div class="legend">
-  <div class="leg-item"><div class="leg-dot" style="background:#2d6e20"></div>Basic 2🌾1💰1⚡</div>
-  <div class="leg-item"><div class="leg-dot" style="background:#8ab830"></div>Fertile 4🌾1💰1⚡</div>
-  <div class="leg-item"><div class="leg-dot" style="background:#506070"></div>Mtn (Era4+)</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#2d6e20"></div>Basic land</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#8ab830"></div>Fertile land</div>
+  <div class="leg-item"><div class="leg-dot" style="background:#506070"></div>Mountain</div>
 </div>
+
 <div id="map-wrap"><canvas id="c"></canvas></div>
+
 <div class="info-bar">
   <div style="flex:1"><div class="iname" id="sel-name">Tap a hex</div><div class="idet" id="sel-det">— explore the map —</div></div>
   <div class="ires" id="sel-res"></div>
 </div>
+
 <div class="act-bar"><div class="act-row">
-  <button class="ab" id="btn-expand" onclick="doAction('claim')"><span class="ac">1AP</span><span class="ic">🗺️</span><span class="lb">Expand<br>1🌾</span></button>
-  <button class="ab" id="btn-build" onclick="doAction('build')"><span class="ac">1AP</span><span class="ic">🏘️</span><span class="lb" id="lb-build">Settle<br>2🌾</span></button>
-  <button class="ab" id="btn-advance" onclick="doAction('advance')"><span class="ac">1AP</span><span class="ic">📈</span><span class="lb" id="lb-advance">Advance<br>Era</span></button>
-  <button class="ab" id="btn-war" onclick="doAction('war')"><span class="ac">2AP</span><span class="ic">⚔️</span><span class="lb">Attack<br>2⚡</span></button>
-  <button class="ab" id="btn-infl" onclick="doAction('influence')"><span class="ac">1AP</span><span class="ic">✝️</span><span class="lb">Influence<br>1⚡</span></button>
+  <button class="ab" id="btn-build" onclick="doAction('build')"><span class="ic">🏗️</span><span class="lb">Build</span></button>
+  <button class="ab" id="btn-war" onclick="doAction('war')"><span class="ic">⚔️</span><span class="lb">Attack<br>2⚡</span></button>
   <button class="ab end-b" onclick="endTurn()"><span class="ic">⏭️</span><span class="lb">End<br>Turn</span></button>
 </div></div>
 
@@ -184,7 +232,17 @@ html,body{width:100%;height:100%;overflow:hidden;background:#0d1f35;font-family:
   <div class="modal"><div class="icon" id="ei"></div><h2 id="et"></h2><p id="ed"></p><div class="fx" id="efx"></div><button onclick="closeEvt()">ACKNOWLEDGE</button></div>
 </div>
 
-<!-- PATH CHOICE MODAL -->
+<!-- BUILD MODAL -->
+<div class="overlay" id="build-wrap">
+  <div class="build-modal">
+    <div class="build-title" id="build-title">🏗️ Build</div>
+    <div class="build-sub" id="build-sub">Choose what to build</div>
+    <div id="build-options"></div>
+    <button class="build-cancel" onclick="closeBuild()">Cancel</button>
+  </div>
+</div>
+
+<!-- PATH MODAL -->
 <div class="overlay" id="path-wrap">
   <div class="path-modal">
     <div class="path-title">⚡ Era Transition</div>
@@ -223,121 +281,84 @@ const SPECIES=[
 let PL,AI;
 function pickSpecies(){
   const sh=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
-  PL={...sh(SPECIES.filter(s=>s.you))[0]};AI={...sh(SPECIES.filter(s=>!s.you))[0]};
+  PL={...sh(SPECIES.filter(s=>s.you))[0]};
+  AI={...sh(SPECIES.filter(s=>!s.you))[0]};
 }
 
 // ═══════════════════════════════
-// PATHS — defined per transition
-// id: unique key, icon, name
-// req: unlock conditions {pop, food, energy, wealth, hexes}
-// bonus: what you get (applied to S.bonus object)
-// bonusDesc: shown on screen
+// BUILDINGS CATALOG
+// id, icon, name, era (min era to build), type: 'settle'|'econ'|'science'
+// cap: pop capacity (settle only)
+// effects: {fR, wR, eR, sciR, stab, infl} per turn bonuses
+// cost: {f, w, e}
 // ═══════════════════════════════
-const PATHS={
-  // ERA 0→1
-  '0_agrarian': {id:'0_agrarian',icon:'🌱',name:'Agrarian',
-    req:{pop:200,food:20},
-    bonus:{foodMult:2},
-    bonusDesc:'Food ×2',
-    consistent:'0_agrarian'},
-  '0_warrior':  {id:'0_warrior',icon:'⚔️',name:'Warrior',
-    req:{pop:200,food:10,energy:5},
-    bonus:{attackBonus:0.30},
-    bonusDesc:'Attack +30%',
-    consistent:'0_warrior'},
-  '0_explorer': {id:'0_explorer',icon:'🧭',name:'Explorer',
-    req:{food:10,hexes:5},
-    bonus:{expandRange:2},
-    bonusDesc:'Claim up to 2 hexes away',
-    consistent:'0_explorer'},
-  // ERA 1→2
-  '1_agrarian': {id:'1_agrarian',icon:'🌱',name:'Agrarian',
-    req:{pop:1000,food:40},
-    bonus:{foodMult:3},       // ×4 if consistent with 0_agrarian
-    bonusConsistent:{foodMult:4},
-    bonusDesc:'Food ×3',
-    bonusDescConsistent:'Food ×4 (consistent!)',
-    consistent:'0_agrarian'},
-  '1_warrior':  {id:'1_warrior',icon:'⚔️',name:'Warrior',
-    req:{pop:1000,food:20,energy:10},
-    bonus:{attackBonus:0.50},
-    bonusConsistent:{attackBonus:0.60},
-    bonusDesc:'Attack +50%',
-    bonusDescConsistent:'Attack +60% (consistent!)',
-    consistent:'0_warrior'},
-  '1_medicine': {id:'1_medicine',icon:'🏥',name:'Medicine',
-    req:{pop:1000,food:20,wealth:8},
-    bonus:{popGrowthMult:2},
-    bonusDesc:'Population grows 2× faster',
-    consistent:null},
-  // ERA 2→3
-  '2_energy':   {id:'2_energy',icon:'⚡',name:'Energy',
-    req:{pop:5000,energy:40},
-    bonus:{energyMult:2},
-    bonusConsistent:{energyMult:4},
-    bonusDesc:'Energy ×2',
-    bonusDescConsistent:'Energy ×4 (consistent!)',
-    consistent:'1_agrarian'}, // consistent if picked agrarian before (energy replaces food path)
-  '2_warrior':  {id:'2_warrior',icon:'⚔️',name:'Warrior',
-    req:{pop:5000,energy:20,wealth:20},
-    bonus:{attackBonus:0.50},
-    bonusConsistent:{attackBonus:0.60},
-    bonusDesc:'Attack +50%',
-    bonusDescConsistent:'Attack +60% (consistent!)',
-    consistent:'1_warrior'},
-  '2_medicine': {id:'2_medicine',icon:'🏥',name:'Medicine',
-    req:{pop:5000,energy:15,wealth:15},
-    bonus:{popGrowthMult:2},
-    bonusConsistent:{popGrowthMult:3},
-    bonusDesc:'Population grows 2× faster',
-    bonusDescConsistent:'Population grows 3× faster (consistent!)',
-    consistent:'1_medicine'},
-  // ERA 3→4
-  '3_energy':   {id:'3_energy',icon:'⚡',name:'Energy',
-    req:{pop:50000,energy:80},
-    bonus:{energyMult:3},
-    bonusConsistent:{energyMult:6},
-    bonusDesc:'Energy ×3',
-    bonusDescConsistent:'Energy ×6 (consistent!)',
-    consistent:'2_energy'},
-  '3_warrior':  {id:'3_warrior',icon:'⚔️',name:'Warrior',
-    req:{pop:50000,energy:40,wealth:40},
-    bonus:{attackAlways:true},
-    bonusConsistent:{attackAlways:true},
-    bonusDesc:'Attack always succeeds',
-    bonusDescConsistent:'Attack always succeeds (consistent!)',
-    consistent:'2_warrior'},
-  '3_medicine': {id:'3_medicine',icon:'🏥',name:'Medicine',
-    req:{pop:50000,energy:60,wealth:30},
-    bonus:{popGrowthMult:3},
-    bonusConsistent:{popGrowthMult:4},
-    bonusDesc:'Population grows 3× faster',
-    bonusDescConsistent:'Population grows 4× faster (consistent!)',
-    consistent:'2_medicine'},
+const BUILDINGS={
+  // ERA 1 — Prehistoric
+  camp:    {id:'camp',    icon:'🛖', name:'Camp',         era:0, type:'settle', cap:200,  cost:{f:3,w:0,e:2}, eff:{}},
+  farm1:   {id:'farm1',  icon:'🌾', name:'Farm',          era:0, type:'econ',   cap:0,    cost:{f:4,w:0,e:0}, eff:{fR:2}},
+  firepit: {id:'firepit',icon:'🔥', name:'Fire Pit',      era:0, type:'econ',   cap:0,    cost:{f:0,w:0,e:3}, eff:{eR:2}},
+  scrip:   {id:'scrip',  icon:'📖', name:'Scriptorium',   era:0, type:'science',cap:0,    cost:{f:0,w:0,e:2}, eff:{sciR:6}},
+  // ERA 2 — Agricultural
+  village: {id:'village',icon:'🏘️', name:'Village',       era:1, type:'settle', cap:500,  cost:{f:3,w:1,e:0}, eff:{}},
+  granary: {id:'granary',icon:'🌽', name:'Granary',        era:1, type:'econ',   cap:0,    cost:{f:0,w:2,e:0}, eff:{fR:3}},
+  mine:    {id:'mine',   icon:'⛏️', name:'Mine',           era:1, type:'econ',   cap:0,    cost:{f:0,w:0,e:3}, eff:{wR:2,eR:1}},
+  library: {id:'library',icon:'📚', name:'Library',        era:1, type:'science',cap:0,    cost:{f:0,w:2,e:0}, eff:{sciR:10}},
+  // ERA 3 — Classical
+  city:    {id:'city',   icon:'🏙️', name:'City',           era:2, type:'settle', cap:2000, cost:{f:0,w:3,e:1}, eff:{}},
+  plant:   {id:'plant',  icon:'🌿', name:'Plantation',     era:2, type:'econ',   cap:0,    cost:{f:0,w:3,e:0}, eff:{fR:4}},
+  harbour: {id:'harbour',icon:'⚓', name:'Harbour',        era:2, type:'econ',   cap:0,    cost:{f:0,w:4,e:2}, eff:{wR:3}},
+  temple:  {id:'temple', icon:'🏛️', name:'Temple',         era:2, type:'econ',   cap:0,    cost:{f:0,w:3,e:0}, eff:{stab:10,infl:8}},
+  academy: {id:'academy',icon:'🏫', name:'Academy',        era:2, type:'science',cap:0,    cost:{f:0,w:3,e:1}, eff:{sciR:15}},
+  // ERA 4 — Industrial
+  city2:   {id:'city2',  icon:'🏙️', name:'Industrial City',era:3, type:'settle', cap:2000, cost:{f:0,w:3,e:2}, eff:{}},
+  factory: {id:'factory',icon:'⚙️', name:'Factory',        era:3, type:'econ',   cap:0,    cost:{f:0,w:4,e:3}, eff:{wR:4,eR:3}},
+  oilrig:  {id:'oilrig', icon:'🛢️', name:'Oil Rig',        era:3, type:'econ',   cap:0,    cost:{f:0,w:5,e:0}, eff:{eR:5}},
+  farm4:   {id:'farm4',  icon:'🚜', name:'Industrial Farm', era:3, type:'econ',  cap:0,    cost:{f:0,w:4,e:2}, eff:{fR:6}},
+  lab:     {id:'lab',    icon:'🔬', name:'Laboratory',      era:3, type:'science',cap:0,   cost:{f:0,w:4,e:2}, eff:{sciR:20}},
+  // ERA 5 — Information
+  metro:   {id:'metro',  icon:'🌆', name:'Metropolis',      era:4, type:'settle', cap:10000,cost:{f:0,w:6,e:3}, eff:{}},
+  datactr: {id:'datactr',icon:'💻', name:'Data Center',     era:4, type:'econ',   cap:0,    cost:{f:0,w:6,e:4}, eff:{wR:5,eR:5}},
+  solar:   {id:'solar',  icon:'☀️', name:'Solar Farm',      era:4, type:'econ',   cap:0,    cost:{f:0,w:5,e:0}, eff:{eR:6}},
+  sfarm:   {id:'sfarm',  icon:'🤖', name:'Smart Farm',      era:4, type:'econ',   cap:0,    cost:{f:0,w:5,e:3}, eff:{fR:8}},
+  resctr:  {id:'resctr', icon:'🖥️', name:'Research Center', era:4, type:'science',cap:0,   cost:{f:0,w:5,e:3}, eff:{sciR:30}},
 };
 
-// Which paths are available per era transition
+// Science thresholds per era transition
+const SCI_THRESH=[15,30,50,80]; // era 0→1, 1→2, 2→3, 3→4
+
+// ═══════════════════════════════
+// PATHS
+// ═══════════════════════════════
+const PATHS={
+  '0_agrarian':{id:'0_agrarian',icon:'🌱',name:'Agrarian',req:{pop:150,food:20},bonus:{foodMult:2},bonusDesc:'Food ×2',consistent:'0_agrarian'},
+  '0_warrior': {id:'0_warrior', icon:'⚔️',name:'Warrior', req:{pop:150,energy:15},bonus:{attackBonus:0.30},bonusDesc:'Attack +30%',consistent:'0_warrior'},
+  '0_explorer':{id:'0_explorer',icon:'🧭',name:'Explorer',req:{food:15,hexes:4},bonus:{expandRange:2},bonusDesc:'Claim 2 hexes away',consistent:'0_explorer'},
+  '1_agrarian':{id:'1_agrarian',icon:'🌱',name:'Agrarian',req:{pop:500,food:60},bonus:{foodMult:3},bonusConsistent:{foodMult:4},bonusDesc:'Food ×3',bonusDescConsistent:'Food ×4 ⭐',consistent:'0_agrarian'},
+  '1_warrior': {id:'1_warrior', icon:'⚔️',name:'Warrior', req:{pop:500,energy:40},bonus:{attackBonus:0.50},bonusConsistent:{attackBonus:0.60},bonusDesc:'Attack +50%',bonusDescConsistent:'Attack +60% ⭐',consistent:'0_warrior'},
+  '1_medicine':{id:'1_medicine',icon:'🏥',name:'Medicine',req:{pop:500,food:30,wealth:10},bonus:{popGrowthMult:2},bonusDesc:'Pop grows 2× faster',consistent:null},
+  '2_energy':  {id:'2_energy',  icon:'⚡',name:'Energy',  req:{pop:5000,energy:40},bonus:{energyMult:2},bonusConsistent:{energyMult:4},bonusDesc:'Energy ×2',bonusDescConsistent:'Energy ×4 ⭐',consistent:'1_agrarian'},
+  '2_warrior': {id:'2_warrior', icon:'⚔️',name:'Warrior', req:{pop:5000,energy:20,wealth:20},bonus:{attackBonus:0.50},bonusConsistent:{attackBonus:0.60},bonusDesc:'Attack +50%',bonusDescConsistent:'Attack +60% ⭐',consistent:'1_warrior'},
+  '2_medicine':{id:'2_medicine',icon:'🏥',name:'Medicine',req:{pop:5000,energy:15,wealth:15},bonus:{popGrowthMult:2},bonusConsistent:{popGrowthMult:3},bonusDesc:'Pop grows 2× faster',bonusDescConsistent:'Pop grows 3× faster ⭐',consistent:'1_medicine'},
+  '3_energy':  {id:'3_energy',  icon:'⚡',name:'Energy',  req:{pop:50000,energy:80},bonus:{energyMult:3},bonusConsistent:{energyMult:6},bonusDesc:'Energy ×3',bonusDescConsistent:'Energy ×6 ⭐',consistent:'2_energy'},
+  '3_warrior': {id:'3_warrior', icon:'⚔️',name:'Warrior', req:{pop:50000,energy:40,wealth:40},bonus:{attackAlways:true},bonusDesc:'Attack always succeeds',consistent:'2_warrior'},
+  '3_medicine':{id:'3_medicine',icon:'🏥',name:'Medicine',req:{pop:50000,energy:60,wealth:30},bonus:{popGrowthMult:3},bonusConsistent:{popGrowthMult:4},bonusDesc:'Pop grows 3× faster',bonusDescConsistent:'Pop grows 4× faster ⭐',consistent:'2_medicine'},
+};
 const ERA_PATHS=[
-  ['0_agrarian','0_warrior','0_explorer'], // era 0→1
-  ['1_agrarian','1_warrior','1_medicine'], // era 1→2
-  ['2_energy','2_warrior','2_medicine'],   // era 2→3
-  ['3_energy','3_warrior','3_medicine'],   // era 3→4
+  ['0_agrarian','0_warrior','0_explorer'],
+  ['1_agrarian','1_warrior','1_medicine'],
+  ['2_energy','2_warrior','2_medicine'],
+  ['3_energy','3_warrior','3_medicine'],
 ];
 
 // ═══════════════════════════════
 // ERAS
 // ═══════════════════════════════
 const ERAS=[
-  {name:'Prehistoric',      icon:'🌿',mult:1.0,foodMult:1.0,infl:false,wealthUnlocked:false,
-   settle:{name:'Village',  icon:'🛖',cap:500,  cost:{f:2,w:0,e:0}}},
-  {name:'Agricultural',     icon:'🌾',mult:1.4,foodMult:1.5,infl:false,wealthUnlocked:true,
-   settle:{name:'Village',  icon:'🛖',cap:500,  cost:{f:0,w:1,e:0}}},
-  {name:'Classical',        icon:'🏛️',mult:2.0,foodMult:2.0,infl:true, wealthUnlocked:true,
-   settle:{name:'City',     icon:'🏙️',cap:2000, cost:{f:0,w:3,e:1}}},
-  {name:'Industrial',       icon:'⚙️',mult:3.0,foodMult:3.0,infl:true, wealthUnlocked:true,
-   settle:{name:'City',     icon:'🏙️',cap:2000, cost:{f:0,w:3,e:1}}},
-  {name:'Information Age',  icon:'💻',mult:4.5,foodMult:4.5,infl:true, wealthUnlocked:true,
-   settle:{name:'Metropolis',icon:'🌆',cap:10000,cost:{f:0,w:6,e:3}}},
+  {name:'Prehistoric',     icon:'🌿',mult:1.0,foodMult:1.0,infl:false,wealthUnlocked:false},
+  {name:'Agricultural',    icon:'🌾',mult:1.4,foodMult:1.5,infl:false,wealthUnlocked:true},
+  {name:'Classical',       icon:'🏛️',mult:2.0,foodMult:2.0,infl:true, wealthUnlocked:true},
+  {name:'Industrial',      icon:'⚙️',mult:3.0,foodMult:3.0,infl:true, wealthUnlocked:true},
+  {name:'Information Age', icon:'💻',mult:4.5,foodMult:4.5,infl:true, wealthUnlocked:true},
 ];
 
 // ═══════════════════════════════
@@ -366,7 +387,7 @@ function genMap(s){
     else if(v>0.82)t='mtn';
     else if(v>0.68)t='fertile';
     else t='basic';
-    map.push({col:c,row:r,t,owner:null,building:null});
+    map.push({col:c,row:r,t,owner:null,settle:null,econ:null});
   }
   return map;
 }
@@ -375,52 +396,42 @@ function genMap(s){
 // STATE
 // ═══════════════════════════════
 const S={
-  food:3,wealth:0,energy:2,
-  fR:1,wR:0,eR:0,
+  food:10,wealth:0,energy:6,science:0,
+  fR:2,wR:0,eR:1,sciR:0,
   military:5,stability:80,
-  eraI:0,eraP:0,
+  eraI:0,
   pop:10,cap:0,
-  ap:3,
+  ap:1,actedThisTurn:false,attackedThisTurn:false,
   harbour:false,airport:false,
-  // Active bonus from last path choice
-  bonus:{
-    foodMult:1,       // multiplier on food production
-    attackBonus:0,    // added to attack probability
-    attackAlways:false,
-    expandRange:1,    // 1=adjacent only, 2=2 hexes away
-    popGrowthMult:1,  // multiplier on pop growth
-    energyMult:1,     // multiplier on energy production
-  },
-  lastPath:null,      // id of last chosen path
+  lastPath:null,
+  bonus:{foodMult:1,attackBonus:0,attackAlways:false,expandRange:1,popGrowthMult:1,energyMult:1},
 };
-const AI_S={pop:10,cap:0};
-const G={turn:1,finalRound:false,finalDone:false,over:false,env:100,inflP:50,inflA:50};
+const AI_S={pop:10,cap:0,stability:70};
+const G={turn:1,finalRound:false,finalDone:false,over:false,env:100,inflP:50,inflA:50,pathPending:false};
 const POP_WIN=1000000;
 
 function fmtPop(p){if(p>=1e6)return(p/1e6).toFixed(2)+'M';if(p>=1e3)return(p/1e3).toFixed(1)+'K';return Math.round(p).toString();}
 function cAt(c,r){return cells[r*COLS+c]||null;}
 
-function hexFood(c){
-  if(!c||c.t==='sea'||c.t==='mtn')return 0;
-  return T[c.t].food*ERAS[S.eraI].foodMult*S.bonus.foodMult;
+function hexFood(c){if(!c||c.t==='sea'||c.t==='mtn')return 0;return T[c.t].food*ERAS[S.eraI].foodMult*S.bonus.foodMult;}
+function hexWealth(c){if(!ERAS[S.eraI].wealthUnlocked)return 0;if(!c)return 0;if(c.t==='mtn')return mtnW(S.eraI);return T[c.t].wealth||0;}
+function hexEnergy(c){if(!c)return 0;if(c.t==='mtn')return mtnE(S.eraI);return (T[c.t].energy||0)*S.bonus.energyMult;}
+
+function buildingEffect(bldId,own){
+  if(!bldId)return;
+  const b=BUILDINGS[bldId];if(!b||!b.eff)return;
+  if(b.eff.fR)  S.fR+=b.eff.fR;
+  if(b.eff.wR)  S.wR+=b.eff.wR;
+  if(b.eff.eR)  S.eR+=b.eff.eR;
+  if(b.eff.sciR)S.sciR+=b.eff.sciR;
+  if(b.eff.stab&&own==='p')S.stability=Math.min(100,S.stability+b.eff.stab);
+  if(b.eff.infl&&own==='p'){G.inflP=Math.min(90,G.inflP+b.eff.infl);G.inflA=Math.max(10,100-G.inflP);}
 }
-function hexWealth(c){
-  if(!ERAS[S.eraI].wealthUnlocked)return 0;
-  if(!c)return 0;
-  if(c.t==='mtn')return mtnW(S.eraI);
-  return T[c.t].wealth||0;
-}
-function hexEnergy(c){
-  if(!c)return 0;
-  if(c.t==='mtn')return mtnE(S.eraI);
-  return (T[c.t].energy||0)*S.bonus.energyMult;
-}
+
 function settleCap(c){
-  if(!c||!c.building)return 0;
-  if(c.building==='🛖')return 500;
-  if(c.building==='🏙️')return 2000;
-  if(c.building==='🌆')return 10000;
-  return 0;
+  if(!c)return 0;
+  const b=c.settle?BUILDINGS[c.settle]:null;
+  return b?b.cap:0;
 }
 
 function recalc(){
@@ -428,10 +439,12 @@ function recalc(){
   S.fR=own.reduce((s,c)=>s+hexFood(c),0);
   S.wR=own.reduce((s,c)=>s+hexWealth(c),0);
   S.eR=own.reduce((s,c)=>s+hexEnergy(c),0);
+  S.sciR=0;
   S.cap=own.reduce((s,c)=>s+settleCap(c),0);
+  own.forEach(c=>{buildingEffect(c.settle,'p');buildingEffect(c.econ,'p');});
   S.military=Math.min(100,Math.floor(S.pop/500*ERAS[S.eraI].mult*.5+5));
-  S.harbour=own.some(c=>c.building==='⚓');
-  S.airport=own.some(c=>c.building==='✈️');
+  S.harbour=own.some(c=>c.settle==='harbour'||c.econ==='harbour');
+  S.airport=own.some(c=>c.econ==='airport');
   AI_S.cap=cells.filter(c=>c.owner==='a').reduce((s,c)=>s+settleCap(c),0);
 }
 
@@ -445,17 +458,35 @@ function growPop(){
 }
 
 // ═══════════════════════════════
-// PATH SYSTEM
+// PATH / ERA SYSTEM
 // ═══════════════════════════════
 function pathMeetsReq(path){
-  const r=path.req;
-  const hexCount=cells.filter(c=>c.owner==='p').length;
+  const r=path.req,hexCount=cells.filter(c=>c.owner==='p').length;
   if(r.pop&&S.pop<r.pop)return false;
   if(r.food&&S.food<r.food)return false;
   if(r.energy&&S.energy<r.energy)return false;
   if(r.wealth&&S.wealth<r.wealth)return false;
   if(r.hexes&&hexCount<r.hexes)return false;
   return true;
+}
+
+function eraReadiness(){
+  if(S.eraI>=ERA_PATHS.length)return 100;
+  const thresh=SCI_THRESH[S.eraI];
+  const sciPct=Math.min(1,S.science/thresh);
+  let bestPath=0;
+  ERA_PATHS[S.eraI].forEach(pid=>{
+    const r=PATHS[pid].req,hexCount=cells.filter(c=>c.owner==='p').length;
+    const checks=[];
+    if(r.pop)checks.push(Math.min(1,S.pop/r.pop));
+    if(r.food)checks.push(Math.min(1,S.food/r.food));
+    if(r.energy)checks.push(Math.min(1,S.energy/r.energy));
+    if(r.wealth)checks.push(Math.min(1,S.wealth/r.wealth));
+    if(r.hexes)checks.push(Math.min(1,hexCount/r.hexes));
+    const avg=checks.length?checks.reduce((a,b)=>a+b,0)/checks.length:0;
+    if(avg>bestPath)bestPath=avg;
+  });
+  return Math.floor((sciPct+bestPath)/2*100);
 }
 
 function reqText(path){
@@ -469,44 +500,32 @@ function reqText(path){
 }
 
 function applyBonus(pathId){
-  const path=PATHS[pathId];
-  if(!path)return;
-  // Check consistency
+  const path=PATHS[pathId];if(!path)return;
   const isConsistent=path.consistent&&S.lastPath===path.consistent;
-  const bonusToApply=isConsistent&&path.bonusConsistent?path.bonusConsistent:path.bonus;
-  // Reset bonus to defaults first
+  const b=isConsistent&&path.bonusConsistent?path.bonusConsistent:path.bonus;
   S.bonus={foodMult:1,attackBonus:0,attackAlways:false,expandRange:1,popGrowthMult:1,energyMult:1};
-  // Apply new bonus
-  Object.assign(S.bonus,bonusToApply);
+  Object.assign(S.bonus,b);
   S.lastPath=pathId;
   recalc();
 }
 
 function showPathChoice(){
   const eraIdx=S.eraI;
-  if(eraIdx>=ERA_PATHS.length)return; // max era
+  if(eraIdx>=ERA_PATHS.length)return;
+  const thresh=SCI_THRESH[eraIdx];
+  if(S.science<thresh){toast('Need '+thresh+'🔬 science to advance! ('+S.science+'/'+thresh+')');return;}
   const pathIds=ERA_PATHS[eraIdx];
   const nextEra=ERAS[eraIdx+1];
-  document.getElementById('path-sub').textContent='→ '+nextEra.icon+' '+nextEra.name+' — choose your path';
-  const container=document.getElementById('path-options');
-  container.innerHTML='';
+  document.getElementById('path-sub').textContent='→ '+nextEra.icon+' '+nextEra.name;
+  const container=document.getElementById('path-options');container.innerHTML='';
   pathIds.forEach(pid=>{
     const path=PATHS[pid];
     const ready=pathMeetsReq(path);
     const isConsistent=path.consistent&&S.lastPath===path.consistent;
     const desc=isConsistent&&path.bonusDescConsistent?path.bonusDescConsistent:path.bonusDesc;
     const btn=document.createElement('button');
-    btn.className='path-btn'+(ready?' ready':'');
-    btn.disabled=!ready;
-    btn.innerHTML=`
-      <span class="p-icon">${path.icon}</span>
-      <span class="p-info">
-        <div class="p-name">${path.name}${isConsistent?' ⭐':''}</div>
-        <div class="p-bonus">✅ ${desc}</div>
-        <div class="p-req">Needs: ${reqText(path)}</div>
-      </span>
-      <span class="p-status" style="color:${ready?'#2ecc71':'#e74c3c'}">${ready?'✓':'✗'}</span>
-    `;
+    btn.className='path-btn'+(ready?' ready':'');btn.disabled=!ready;
+    btn.innerHTML=`<span class="p-icon">${path.icon}</span><span class="p-info"><div class="p-name">${path.name}</div><div class="p-bonus">✅ ${desc}</div><div class="p-req">Needs: ${reqText(path)}</div></span><span class="p-status" style="color:${ready?'#2ecc71':'#e74c3c'}">${ready?'✓':'✗'}</span>`;
     if(ready)btn.onclick=()=>choosePath(pid);
     container.appendChild(btn);
   });
@@ -515,23 +534,171 @@ function showPathChoice(){
 
 function choosePath(pathId){
   document.getElementById('path-wrap').classList.remove('on');
+  G.pathPending=false;
+  const fromEra=S.eraI;
   applyBonus(pathId);
-  // Advance era
-  S.eraI++;S.eraP=0;recalc();
+  S.eraI++;
+  S.science=0; // reset science
+  recalc();
   const path=PATHS[pathId];
-  const isConsistent=path.consistent&&S.lastPath===path.id; // already set above
   toast('🎉 '+ERAS[S.eraI].icon+' '+ERAS[S.eraI].name+'! '+path.icon+' '+path.bonusDesc);
   updateUI();render();
+  setTimeout(()=>fireEraEvent(fromEra),1200);
 }
 
-function checkAdvance(){
-  // Show path choice when era progress hits 100
-  if(S.eraP>=100){
-    if(S.eraI<ERAS.length-1){
-      S.eraP=100; // hold at 100 until path chosen
-      showPathChoice();
-    }
+function checkEraReady(){
+  if(S.eraI>=ERA_PATHS.length)return;
+  const thresh=SCI_THRESH[S.eraI];
+  if(S.science>=thresh&&!G.pathPending){
+    const anyReady=ERA_PATHS[S.eraI].some(pid=>pathMeetsReq(PATHS[pid]));
+    if(anyReady){G.pathPending=true;setTimeout(showPathChoice,400);}
+    else toast('🔬 Science threshold reached! Meet a path condition to advance.');
   }
+}
+
+// ═══════════════════════════════
+// BUILD MODAL
+// ═══════════════════════════════
+let buildTargetCell=null;
+function showBuildModal(c){
+  buildTargetCell=c;
+  const isOwned=c.owner==='p';
+  document.getElementById('build-title').textContent=(isOwned?'🏗️ Build on '+T[c.t].label:'🗺️ Settle '+T[c.t].label);
+  document.getElementById('build-sub').textContent=isOwned?'Add a building to your hex':'Claim and build on this hex';
+  const container=document.getElementById('build-options');container.innerHTML='';
+
+  // Group buildings by type
+  const avail=Object.values(BUILDINGS).filter(b=>b.era<=S.eraI);
+  const settles=avail.filter(b=>b.type==='settle');
+  const econs=avail.filter(b=>b.type==='econ');
+  const scis=avail.filter(b=>b.type==='science');
+
+  function makeSection(title,list,slot){
+    if(!list.length)return;
+    const sec=document.createElement('div');sec.className='build-section';sec.textContent=title;container.appendChild(sec);
+    list.forEach(b=>{
+      const alreadyHere=c[slot]===b.id;
+      const costParts=[];
+      if(b.cost.f)costParts.push(b.cost.f+'🌾');
+      if(b.cost.w)costParts.push(b.cost.w+'💰');
+      if(b.cost.e)costParts.push(b.cost.e+'⚡');
+      const effParts=[];
+      if(b.cap)effParts.push('+'+fmtPop(b.cap)+' cap');
+      if(b.eff.fR)effParts.push('+'+b.eff.fR+'🌾/t');
+      if(b.eff.wR)effParts.push('+'+b.eff.wR+'💰/t');
+      if(b.eff.eR)effParts.push('+'+b.eff.eR+'⚡/t');
+      if(b.eff.sciR)effParts.push('+'+b.eff.sciR+'🔬/t');
+      if(b.eff.stab)effParts.push('+'+b.eff.stab+' stability');
+      const canAfford=S.food>=b.cost.f&&S.wealth>=b.cost.w&&S.energy>=b.cost.e;
+      const btn=document.createElement('button');
+      btn.className='build-btn'+(alreadyHere?' owned':'');
+      btn.disabled=alreadyHere||!canAfford;
+      btn.innerHTML=`<span class="b-icon">${b.icon}</span><span class="b-info"><div class="b-name">${b.name}${alreadyHere?' ✓':''}</div><div class="b-eff">${effParts.join(' · ')}</div><div class="b-cost">Cost: ${costParts.join(' ')}</div></span>`;
+      if(!alreadyHere&&canAfford)btn.onclick=()=>doBuild(b.id,slot,b.cost,isOwned);
+      container.appendChild(btn);
+    });
+  }
+
+  makeSection('🏠 Settlements (pop capacity)',settles,'settle');
+  makeSection('⚙️ Economic buildings',econs,'econ');
+  makeSection('🔬 Science buildings',scis,'econ');
+  document.getElementById('build-wrap').classList.add('on');
+}
+
+function doBuild(bldId,slot,cost,isOwned){
+  document.getElementById('build-wrap').classList.remove('on');
+  if(!buildTargetCell)return;
+  const c=buildTargetCell;
+  // Claim hex if not owned
+  if(!isOwned){
+    const range=S.bonus.expandRange||1;
+    const inRange=cells.filter(c2=>c2.owner==='p').some(c2=>hexDist(c,c2)<=range);
+    if(!inRange){toast('Too far from your territory!');return;}
+    c.owner='p';
+  }
+  S.food-=cost.f||0;S.wealth-=cost.w||0;S.energy-=cost.e||0;
+  S.actedThisTurn=true;
+  c[slot]=bldId;
+  recalc();
+  const b=BUILDINGS[bldId];
+  const effParts=[];
+  if(b.cap)effParts.push('+'+fmtPop(b.cap)+' cap');
+  if(b.eff.fR)effParts.push('+'+b.eff.fR+'🌾/t');
+  if(b.eff.wR)effParts.push('+'+b.eff.wR+'💰/t');
+  if(b.eff.eR)effParts.push('+'+b.eff.eR+'⚡/t');
+  if(b.eff.sciR)effParts.push('+'+b.eff.sciR+'🔬/t');
+  toast(b.icon+' '+b.name+' built! '+effParts.join(' '));
+  updateUI();render();
+  setTimeout(endTurn,600);
+}
+
+function closeBuild(){document.getElementById('build-wrap').classList.remove('on');}
+
+// ═══════════════════════════════
+// ERA EVENTS
+// ═══════════════════════════════
+function score(stab,infl,env){return Math.floor((stab+infl+env)/3);}
+
+function applyToPlayer(ps,effect,isPlayer){
+  if(effect.pop)   ps.pop=Math.max(0,Math.floor(ps.pop*(1+effect.pop)));
+  if(effect.food)  ps.food=Math.max(0,Math.floor(ps.food*(1+effect.food)));
+  if(effect.wealth)ps.wealth=Math.max(0,Math.floor(ps.wealth*(1+effect.wealth)));
+  if(effect.energy)ps.energy=Math.max(0,Math.floor(ps.energy*(1+effect.energy)));
+  if(effect.stab)  ps.stability=Math.min(100,Math.max(0,(ps.stability||80)+(effect.stab||0)));
+  if(effect.eReg&&isPlayer)eraRegress();
+}
+
+function getEffect(ev,stab,infl,env){
+  const sc=score(stab,infl,env);
+  return sc>=60?ev.good:sc>=30?ev.mid:ev.bad;
+}
+
+function fxText(effect){
+  const lines=[];
+  if(effect.pop)   lines.push({t:'Population '+(effect.pop>0?'+':'')+Math.round(effect.pop*100)+'%',b:effect.pop<0});
+  if(effect.food)  lines.push({t:'Food '+(effect.food>0?'+':'')+Math.round(effect.food*100)+'%',b:effect.food<0});
+  if(effect.wealth)lines.push({t:'Wealth '+(effect.wealth>0?'+':'')+Math.round(effect.wealth*100)+'%',b:effect.wealth<0});
+  if(effect.energy)lines.push({t:'Energy '+(effect.energy>0?'+':'')+Math.round(effect.energy*100)+'%',b:effect.energy<0});
+  if(effect.stab)  lines.push({t:'Stability '+(effect.stab>0?'+':'')+effect.stab,b:effect.stab<0});
+  if(effect.eReg)  lines.push({t:'ERA −1 !!',b:true});
+  return lines;
+}
+
+const ERA_EVENTS=[
+  [{icon:'🌾',title:'Bumper Harvest',desc:'Exceptional crops across all lands.',good:{food:+0.30,stab:+5},mid:{food:+0.15},bad:{food:+0.05}},
+   {icon:'🔥',title:'Wildfire',desc:'Flames sweep through your territories.',good:{pop:-0.10,food:-0.20},mid:{pop:-0.20,food:-0.30},bad:{pop:-0.25,food:-0.40,eReg:true}}],
+  [{icon:'🧠',title:'Renaissance',desc:'A cultural awakening sweeps your people.',good:{pop:+0.20,stab:+10},mid:{pop:+0.10,stab:+5},bad:{pop:+0.05}},
+   {icon:'☣️',title:'Pandemic',desc:'Disease spreads through your settlements.',good:{pop:-0.15},mid:{pop:-0.25,stab:-10},bad:{pop:-0.35,stab:-15,eReg:true}}],
+  [{icon:'💰',title:'Trade Boom',desc:'Commerce flourishes across your civilization.',good:{wealth:+0.30,stab:+5},mid:{wealth:+0.15},bad:{wealth:+0.05}},
+   {icon:'💸',title:'Economic Crash',desc:'Markets collapse across your territories.',good:{wealth:-0.20},mid:{wealth:-0.40,stab:-10},bad:{wealth:-0.50,stab:-15,eReg:true}}],
+  [{icon:'⚡',title:'Energy Revolution',desc:'A breakthrough powers your civilization.',good:{energy:+0.30,stab:+5},mid:{energy:+0.15},bad:{energy:+0.05}},
+   {icon:'🌡️',title:'Climate Crisis',desc:'Environmental collapse threatens survival.',good:{food:-0.10},mid:{food:-0.25,pop:-0.10},bad:{food:-0.40,pop:-0.20,eReg:true}}],
+];
+
+function fireEraEvent(fromEra){
+  if(fromEra<0||fromEra>=ERA_EVENTS.length)return;
+  const ev=ERA_EVENTS[fromEra][Math.floor(Math.random()*2)];
+  const pEffect=getEffect(ev,S.stability,G.inflP,G.env);
+  applyToPlayer(S,pEffect,true);
+  const aEffect=getEffect(ev,AI_S.stability||60,G.inflA,G.env);
+  applyToPlayer(AI_S,aEffect,false);
+  const sc=score(S.stability,G.inflP,G.env);
+  const situation=sc>=60?'Your civilization is stable — damage limited.':sc>=30?'Your civilization is vulnerable.':'Crisis! Instability at its worst.';
+  document.getElementById('ei').textContent=ev.icon;
+  document.getElementById('et').textContent=ev.title;
+  document.getElementById('ed').textContent=ev.desc+' '+situation;
+  document.getElementById('efx').innerHTML=fxText(pEffect).map(f=>'<div class="'+(f.b?'fb':'fg')+'">'+(f.b?'▼':'▲')+' '+f.t+'</div>').join('');
+  document.getElementById('evt-wrap').classList.add('on');
+  recalc();updateUI();render();
+}
+
+function eraRegress(){
+  if(S.eraI>0){
+    S.eraI--;S.science=0;
+    S.bonus={foodMult:1,attackBonus:0,attackAlways:false,expandRange:1,popGrowthMult:1,energyMult:1};
+    S.lastPath=null;recalc();
+    toast('💀 Regressed to '+ERAS[S.eraI].name+'!');updateUI();render();
+  }else toast('💀 Already at first era!');
 }
 
 // ═══════════════════════════════
@@ -539,8 +706,9 @@ function checkAdvance(){
 // ═══════════════════════════════
 function initGame(){
   pickSpecies();cells=genMap(seed);
-  const p0=cAt(0,0);if(p0&&p0.t!=='sea')p0.owner='p';
-  const a0=cAt(1,6);if(a0&&a0.t!=='sea')a0.owner='a';
+  const p0=cAt(0,0);if(p0&&p0.t!=='sea'){p0.owner='p';p0.t='basic';p0.settle='camp';}
+  const p1=cAt(1,0)||cAt(0,1);if(p1&&p1.t!=='sea'){p1.owner='p';p1.t='basic';}
+  const a0=cAt(1,6);if(a0&&a0.t!=='sea'){a0.owner='a';a0.t='basic';a0.settle='camp';}
   recalc();
   document.getElementById('pop-p-lbl').textContent=PL.f+' '+PL.n;
   document.getElementById('pop-a-lbl').textContent=AI.f+' '+AI.n;
@@ -554,14 +722,15 @@ function initGame(){
 
 function newGame(){
   seed=Math.floor(Math.random()*99999);
-  Object.assign(S,{food:3,wealth:0,energy:2,fR:1,wR:0,eR:0,military:5,stability:80,eraI:0,eraP:0,pop:10,cap:0,ap:3,harbour:false,airport:false,lastPath:null,
+  Object.assign(S,{food:10,wealth:0,energy:6,science:0,fR:2,wR:0,eR:1,sciR:0,military:5,stability:80,eraI:0,pop:10,cap:0,ap:1,actedThisTurn:false,attackedThisTurn:false,harbour:false,airport:false,lastPath:null,
     bonus:{foodMult:1,attackBonus:0,attackAlways:false,expandRange:1,popGrowthMult:1,energyMult:1}});
-  Object.assign(AI_S,{pop:10,cap:0});
-  Object.assign(G,{turn:1,finalRound:false,finalDone:false,over:false,env:100,inflP:50,inflA:50});
-  selCell=null;
+  Object.assign(AI_S,{pop:10,cap:0,stability:70});
+  Object.assign(G,{turn:1,finalRound:false,finalDone:false,over:false,env:100,inflP:50,inflA:50,pathPending:false});
+  selCell=null;buildTargetCell=null;
   document.getElementById('final-badge').classList.remove('on');
   document.getElementById('win-wrap').classList.remove('on');
   document.getElementById('path-wrap').classList.remove('on');
+  document.getElementById('build-wrap').classList.remove('on');
   initGame();
 }
 
@@ -581,15 +750,15 @@ function drawStreaks(px,py,r,color){
   const step=r*0.36;for(let i=-5;i<=5;i++){ctx.beginPath();ctx.moveTo(px+i*step-r,py-r);ctx.lineTo(px+i*step+r,py+r);ctx.stroke();}ctx.restore();
 }
 function hexDist(c1,c2){
-  // Hex distance using cube coordinates
-  function toCube(col,row){const x=col-(row-(row&1))/2;const z=row;return{x,y:-x-z,z};}
-  const a=toCube(c1.col,c1.row),b=toCube(c2.col,c2.row);
+  function cube(col,row){const x=col-(row-(row&1))/2,z=row;return{x,y:-x-z,z};}
+  const a=cube(c1.col,c1.row),b=cube(c2.col,c2.row);
   return Math.max(Math.abs(a.x-b.x),Math.abs(a.y-b.y),Math.abs(a.z-b.z));
 }
 function drawCell(c){
   const{x,y,r}=hXY(c.col,c.row),R=r-1,t=T[c.t];
   hp(x,y,R);ctx.fillStyle=t.bg;ctx.fill();
-  if(c.owner==='p')drawStreaks(x,y,R,PL.c);else if(c.owner==='a')drawStreaks(x,y,R,AI.c);
+  if(c.owner==='p')drawStreaks(x,y,R,PL.c);
+  else if(c.owner==='a')drawStreaks(x,y,R,AI.c);
   // Claimable glow
   if(!c.owner&&c.t!=='sea'){
     const range=S.bonus.expandRange||1;
@@ -611,7 +780,16 @@ function drawCell(c){
     if(mtnW(S.eraI)>0){ctx.font=Math.max(6,r*.19)+'px sans-serif';ctx.fillStyle='rgba(255,210,80,0.9)';ctx.fillText('+'+mtnW(S.eraI)+'💰',x,y+r*.38);}
   }else if(c.t==='fertile'){ctx.fillStyle='rgba(180,240,80,0.6)';ctx.font=Math.max(8,r*.32)+'px serif';ctx.fillText('✦',x,y);}
   else{ctx.fillStyle='rgba(4,36,4,0.6)';[[-r*.17,r*.04],[0,-r*.1],[r*.17,r*.04]].forEach(([dx,dy])=>{ctx.beginPath();ctx.moveTo(x+dx,y+dy-r*.2);ctx.lineTo(x+dx-r*.12,y+dy+r*.1);ctx.lineTo(x+dx+r*.12,y+dy+r*.1);ctx.closePath();ctx.fill();});}
-  if(c.building){ctx.font=Math.max(9,r*.38)+'px serif';ctx.fillText(c.building,x,y+r*.32);}
+  // Show buildings
+  const icons=[];
+  if(c.settle)icons.push(BUILDINGS[c.settle]?.icon);
+  if(c.econ)  icons.push(BUILDINGS[c.econ]?.icon);
+  if(icons.length===1){ctx.font=Math.max(9,r*.38)+'px serif';ctx.fillText(icons[0],x,y+r*.3);}
+  else if(icons.length===2){
+    ctx.font=Math.max(7,r*.30)+'px serif';
+    ctx.fillText(icons[0],x-r*.18,y+r*.32);
+    ctx.fillText(icons[1],x+r*.18,y+r*.32);
+  }
   ctx.restore();
 }
 function drawBadge(owner,lbl,col,bg){
@@ -641,14 +819,17 @@ const DE=[[1,0],[-1,0],[0,-1],[-1,-1],[0,1],[-1,1]],DO=[[1,0],[-1,0],[0,-1],[1,-
 function nbrs(c){const d=c.row%2===0?DE:DO;return d.map(([dc,dr])=>cAt(c.col+dc,c.row+dr)).filter(Boolean);}
 function adjEnemy(own){const en=own==='p'?'a':'p';for(const c of cells.filter(c=>c.owner===own)){const nb=nbrs(c).find(n=>n.owner===en);if(nb)return nb;}return null;}
 function nearCell(mx,my){const h=hs();let best=null,bd=Infinity;cells.forEach(c=>{const p=hXY(c.col,c.row);const d=Math.hypot(mx-p.x,my-p.y);if(d<h&&d<bd){bd=d;best=c;}});return best;}
+
 function selC(c){
   if(!c||c.t==='sea')return;selCell=c;
-  const food=hexFood(c),w=hexWealth(c),e=hexEnergy(c),cap=settleCap(c);
+  const food=hexFood(c),w=hexWealth(c),e=hexEnergy(c);
+  const sIcon=c.settle?BUILDINGS[c.settle]?.icon:'';
+  const eIcon=c.econ?BUILDINGS[c.econ]?.icon:'';
   let det=c.owner==='p'?'✅ '+PL.n:c.owner==='a'?'⚔️ '+AI.n:'⬜ Unclaimed';
-  if(c.building)det+=' · '+c.building+(cap?' (+'+fmtPop(cap)+')':'');
+  if(sIcon||eIcon)det+=' '+sIcon+eIcon;
   const range=S.bonus.expandRange||1;
   const claimable=!c.owner&&cells.filter(c2=>c2.owner==='p').some(c2=>hexDist(c,c2)<=range);
-  if(claimable)det='👆 Tap Expand to claim';
+  if(claimable)det='👆 Tap Settle or Build';
   document.getElementById('sel-name').textContent=T[c.t].label+(c.t==='mtn'&&mtnW(S.eraI)===0?' (Era 4+)':'');
   document.getElementById('sel-det').textContent=det;
   document.getElementById('sel-res').innerHTML='<span>🌾'+food.toFixed(0)+'</span>'+(w?'<span>💰'+w+'</span>':'')+(e?'<span>⚡'+e+'</span>':'');
@@ -660,104 +841,34 @@ cv.addEventListener('touchstart',e=>{e.preventDefault();const t=e.touches[0],r=c
 // ═══════════════════════════════
 // ACTIONS
 // ═══════════════════════════════
-function spAP(n){if(S.ap<n){toast('Not enough AP!');return false;}S.ap-=n;return true;}
-function spRes(f,w,e){f=f||0;w=w||0;e=e||0;if(S.food<f||S.wealth<w||S.energy<e){toast('Need '+(f?f+'🌾 ':'')+( w?w+'💰 ':'')+( e?e+'⚡':''));return false;}S.food-=f;S.wealth-=w;S.energy-=e;return true;}
-
 function doAction(type){
-  if(G.over)return;let msg='';
-  if(type==='claim'){
+  if(G.over)return;
+  if(type==='build'){
     if(!selCell){toast('Tap a hex first!');return;}
-    if(selCell.owner){toast(selCell.owner==='p'?'Already yours!':'Attack instead!');return;}
-    if(selCell.t==='sea'){toast('Cannot claim sea!');return;}
-    const range=S.bonus.expandRange||1;
-    const inRange=cells.filter(c=>c.owner==='p').some(c=>hexDist(selCell,c)<=range);
-    if(!inRange){toast('Too far! Range: '+range+' hex'+(range>1?'es':''));return;}
-    if(!spAP(1))return;if(!spRes(1)){S.ap++;return;}
-    selCell.owner='p';recalc();
-    msg='Claimed '+T[selCell.t].label+'! +'+hexFood(selCell).toFixed(0)+'🌾/turn';
-  }
-  else if(type==='build'){
-    if(!selCell||selCell.owner!=='p'){toast('Select your hex!');return;}
+    if(selCell.owner==='a'){toast('Enemy territory — use Attack!');return;}
     if(selCell.t==='sea'||selCell.t==='mtn'){toast('Cannot build here!');return;}
-    if(selCell.building&&['🛖','🏙️','🌆'].includes(selCell.building)){toast('Already settled!');return;}
-    const s=ERAS[S.eraI].settle;
-    if(!spAP(1))return;if(!spRes(s.cost.f||0,s.cost.w||0,s.cost.e||0)){S.ap++;return;}
-    selCell.building=s.icon;recalc();msg='Built '+s.name+'! +'+fmtPop(s.cap)+' capacity.';
-  }
-  else if(type==='advance'){
-    // Show what's needed
-    if(S.eraI>=ERAS.length-1){toast('Already at maximum era!');return;}
-    showPathChoice();
-    return;
+    if(S.actedThisTurn){toast('Already acted this turn!');return;}
+    showBuildModal(selCell);
   }
   else if(type==='war'){
-    if(!spAP(2))return;if(!spRes(0,0,2)){S.ap+=2;return;}
+    if(S.actedThisTurn){toast('Already acted this turn!');return;}
+    if(S.attackedThisTurn){toast('Already attacked this turn!');return;}
+    if(S.energy<2){toast('Need 2⚡ to attack!');return;}
     const tgt=S.airport?cells.filter(c=>c.owner==='a')[Math.floor(Math.random()*cells.filter(c=>c.owner==='a').length)]:adjEnemy('p');
-    if(!tgt){toast('No enemy hex reachable!');S.ap+=2;S.energy+=2;return;}
+    if(!tgt){toast('No enemy hex reachable!');return;}
+    S.energy-=2;S.actedThisTurn=true;S.attackedThisTurn=true;
     const winChance=S.bonus.attackAlways?1:(0.44+S.bonus.attackBonus);
     if(Math.random()<winChance){
-      const cap=settleCap(tgt),bld=tgt.building;tgt.owner='p';
-      if(bld&&cap>0){AI_S.pop=Math.max(0,AI_S.pop-cap);msg='⚔️ Captured '+bld+'! −'+fmtPop(cap)+' enemy people!';}
-      else msg='⚔️ Victory! Territory captured.';
+      const cap=settleCap(tgt),sIcon=tgt.settle?BUILDINGS[tgt.settle]?.icon:'';
+      tgt.owner='p';
+      if(cap>0){AI_S.pop=Math.max(0,AI_S.pop-cap);toast('⚔️ Captured! Enemy loses '+fmtPop(cap)+' people '+(sIcon||''));}
+      else toast('⚔️ Territory captured!');
       recalc();
-    }else msg='⚔️ Repelled!';
+    }else toast('⚔️ Repelled!');
+    updateUI();render();
+    setTimeout(endTurn,600);
   }
-  else if(type==='influence'){
-    if(!ERAS[S.eraI].infl){toast('Unlocks at Classical era!');return;}
-    if(!spAP(1))return;if(!spRes(0,0,1)){S.ap++;return;}
-    G.inflP=Math.min(90,G.inflP+8);G.inflA=Math.max(10,100-G.inflP);
-    S.stability=Math.min(100,S.stability+4);recalc();msg='✝️ Influence spreads!';
-  }
-  if(msg)toast(msg);updateUI();render();
 }
-
-// ═══════════════════════════════
-// EVENTS
-// ═══════════════════════════════
-function eraRegress(){
-  if(S.eraI>0){
-    S.eraI--;S.eraP=0;
-    // Reset bonus when regressing
-    S.bonus={foodMult:1,attackBonus:0,attackAlways:false,expandRange:1,popGrowthMult:1,energyMult:1};
-    S.lastPath=null;
-    recalc();toast('💀 Regressed to '+ERAS[S.eraI].name+'!');updateUI();render();
-  }else{S.eraP=0;toast('💀 Era progress wiped out!');}
-}
-
-const EVENTS=[
-  {icon:'🔥',title:'Riots',era:[0,1,2,3,4],
-   desc:s=>s>60?'Unrest contained.':s>30?'Riots spread through your cities.':'Revolution! Civilization collapses.',
-   fx:s=>s>60?[{t:'Population −10%',b:true}]:s>30?[{t:'Population −25%',b:true}]:[{t:'Population −25%',b:true},{t:'ERA −1',b:true}],
-   apply:(s,stab)=>{if(stab>60)s.pop=Math.floor(s.pop*.9);else if(stab>30)s.pop=Math.floor(s.pop*.75);else{s.pop=Math.floor(s.pop*.75);eraRegress();}}},
-  {icon:'☣️',title:'Plague',era:[0,1,2,3,4],
-   desc:s=>s>60?'Disease contained.':s>30?'Plague spreads.':'Plague devastates your civilization.',
-   fx:s=>s>60?[{t:'Population −15%',b:true}]:s>30?[{t:'Population −30%',b:true}]:[{t:'Population −30%',b:true},{t:'ERA −1',b:true}],
-   apply:(s,stab)=>{if(stab>60)s.pop=Math.floor(s.pop*.85);else if(stab>30)s.pop=Math.floor(s.pop*.7);else{s.pop=Math.floor(s.pop*.7);eraRegress();}}},
-  {icon:'🌾',title:'Famine',era:[0,1,2,3,4],
-   desc:s=>s>60?'Reserves soften the blow.':s>30?'Crops fail.':'Starvation triggers collapse.',
-   fx:s=>s>60?[{t:'Food −50%',b:true}]:s>30?[{t:'Food −50%',b:true},{t:'Population −15%',b:true}]:[{t:'Food −50%',b:true},{t:'Population −20%',b:true},{t:'ERA −1',b:true}],
-   apply:(s,stab)=>{s.food=Math.max(0,Math.floor(s.food*.5));if(stab<=60)s.pop=Math.floor(s.pop*.85);if(stab<=30){s.pop=Math.floor(s.pop*.8);eraRegress();}}},
-  {icon:'💸',title:'Economic Collapse',era:[1,2,3,4],
-   desc:s=>s>60?'Markets recover quickly.':s>30?'Economy in recession.':'Total collapse.',
-   fx:s=>s>60?[{t:'Wealth −40%',b:true}]:s>30?[{t:'Wealth −60%',b:true}]:[{t:'Wealth −60%',b:true},{t:'ERA −1',b:true}],
-   apply:(s,stab)=>{s.wealth=Math.floor(s.wealth*(stab>60?.6:.4));if(stab<=30)eraRegress();}},
-  {icon:'🛢️',title:'Oil Crisis',era:[3,4],
-   desc:s=>s>60?'Rationing kicks in.':s>30?'Industry halts.':'Civilization regresses.',
-   fx:s=>s>60?[{t:'Energy −50%',b:true}]:s>30?[{t:'Energy −80%',b:true}]:[{t:'ERA −1',b:true}],
-   apply:(s,stab)=>{s.energy=Math.floor(s.energy*(stab>60?.5:.2));if(stab<=30)eraRegress();}},
-  {icon:'🌋',title:'Disaster',era:[0,1,2,3,4],
-   desc:s=>s>60?'Aid limits damage.':s>30?'Settlements destroyed.':'Catastrophic loss.',
-   fx:s=>s>60?[{t:'Population −10%',b:true}]:s>30?[{t:'Population −20%',b:true}]:[{t:'Population −25%',b:true},{t:'ERA −1',b:true}],
-   apply:(s,stab)=>{
-     s.pop=Math.floor(s.pop*(stab>60?.9:stab>30?.8:.75));
-     if(stab<=30)eraRegress();
-     else if(stab<=60){const settled=cells.filter(c=>c.owner==='p'&&c.building);if(settled.length){settled[0].building=null;recalc();}}
-   }},
-  {icon:'🧠',title:'Great Discovery',era:[0,1,2,3,4],
-   desc:()=>'A genius changes everything.',
-   fx:()=>[{t:'Era progress +1 step',b:false}],
-   apply:()=>{S.eraP=Math.min(99,S.eraP+25);recalc();}},
-];
 
 // ═══════════════════════════════
 // END TURN
@@ -765,32 +876,39 @@ const EVENTS=[
 function endTurn(){
   if(G.over)return;
   S.food+=S.fR;S.wealth+=S.wR;S.energy+=S.eR;
+  S.science+=S.sciR;
   growPop();
   if(S.eraI>=3)G.env=Math.max(0,G.env-2);
   if(ERAS[S.eraI].infl){G.inflA=Math.min(85,G.inflA+1);G.inflP=Math.max(15,100-G.inflA);}
   aiTurn();
-  // Events every 5 turns
-  if(G.turn>1&&G.turn%5===0){
-    const eligible=EVENTS.filter(e=>e.era.includes(S.eraI));
-    const ev=eligible[Math.floor(Math.random()*eligible.length)];
-    const stab=S.stability;ev.apply(S,stab);showEvt(ev,stab);
-  }
+  checkEraReady();
   if(S.pop>=POP_WIN||AI_S.pop>=POP_WIN){
     if(!G.finalRound){G.finalRound=true;document.getElementById('final-badge').classList.add('on');toast('🚨 1M reached! Final round!');}
     else if(!G.finalDone){G.finalDone=true;endGame();return;}
   }
-  S.ap=3;G.turn++;recalc();updateUI();render();
-  toast('Turn '+G.turn+' — '+fmtPop(S.pop)+' people');
+  S.ap=1;S.actedThisTurn=false;S.attackedThisTurn=false;G.turn++;
+  recalc();updateUI();render();
+  toast('Turn '+G.turn+' — '+fmtPop(S.pop)+' people · 🔬'+S.science+'/'+SCI_THRESH[Math.min(S.eraI,3)]);
 }
 
 function aiTurn(){
   const DE2=[[1,0],[-1,0],[0,-1],[-1,-1],[0,1],[-1,1]],DO2=[[1,0],[-1,0],[0,-1],[1,-1],[0,1],[1,1]];
+  // Expand
   for(const src of cells.filter(c=>c.owner==='a')){
     const dirs=src.row%2===0?DE2:DO2;
-    for(const[dc,dr]of dirs){const nb=cAt(src.col+dc,src.row+dr);if(nb&&!nb.owner&&nb.t!=='sea'){nb.owner='a';recalc();break;}}break;
+    for(const[dc,dr]of dirs){const nb=cAt(src.col+dc,src.row+dr);if(nb&&!nb.owner&&nb.t!=='sea'&&nb.t!=='mtn'){nb.owner='a';recalc();break;}}break;
   }
-  const unsettled=cells.filter(c=>c.owner==='a'&&!c.building&&c.t!=='sea'&&c.t!=='mtn');
-  if(unsettled.length){unsettled.sort((a,b)=>T[b.t].food-T[a.t].food);unsettled[0].building=ERAS[S.eraI].settle.icon;recalc();}
+  // Build on owned hexes
+  const unsettled=cells.filter(c=>c.owner==='a'&&!c.settle&&c.t!=='sea'&&c.t!=='mtn');
+  if(unsettled.length){
+    unsettled.sort((a,b)=>T[b.t].food-T[a.t].food);
+    // Pick best settle building for current era
+    const settles=Object.values(BUILDINGS).filter(b=>b.type==='settle'&&b.era<=S.eraI);
+    settles.sort((a,b)=>b.cap-a.cap);
+    if(settles.length)unsettled[0].settle=settles[0].id;
+    recalc();
+  }
+  // Occasionally attack
   if(Math.random()<0.25){
     for(const src of cells.filter(c=>c.owner==='a')){
       const dirs=src.row%2===0?DE2:DO2;
@@ -824,37 +942,28 @@ function endGame(){
 function updateUI(){
   const era=ERAS[S.eraI],next=ERAS[S.eraI+1];
   document.getElementById('era-name').textContent=era.icon+' '+era.name;
-  document.getElementById('era-pf').style.width=S.eraP+'%';
-  document.getElementById('era-pct').textContent=S.eraP+'%';
   document.getElementById('era-next').textContent=next?'→ '+next.name:'🏆 Max';
 
-  // Active bonus badge
-  const bb=document.getElementById('bonus-badge');
-  if(S.lastPath&&PATHS[S.lastPath]){
-    const p=PATHS[S.lastPath];
-    bb.textContent=p.icon+' '+p.bonusDesc;
-    bb.style.display='block';
-  } else bb.style.display='none';
+  // Science bar
+  const thresh=SCI_THRESH[Math.min(S.eraI,SCI_THRESH.length-1)];
+  const sciPct=S.eraI>=ERAS.length-1?100:Math.min(100,Math.floor(S.science/thresh*100));
+  document.getElementById('sci-pf').style.width=sciPct+'%';
+  document.getElementById('sci-pct').textContent=S.science+'/'+thresh;
 
-  // Advance button — show what's needed
-  if(next&&S.eraI<ERA_PATHS.length){
-    const pathIds=ERA_PATHS[S.eraI];
-    const anyReady=pathIds.some(pid=>pathMeetsReq(PATHS[pid]));
-    document.getElementById('lb-advance').innerHTML=anyReady?'Advance<br>✅ Ready!':'Advance<br>Era';
-    document.getElementById('btn-advance').style.color=anyReady?'#2ecc71':'';
-  } else {
-    document.getElementById('lb-advance').innerHTML='Max<br>Era';
-    document.getElementById('btn-advance').disabled=true;
-  }
+  // Bonus badge
+  const bb=document.getElementById('bonus-badge');
+  if(S.lastPath&&PATHS[S.lastPath]){bb.textContent=PATHS[S.lastPath].icon+' '+PATHS[S.lastPath].bonusDesc;bb.style.display='block';}
+  else bb.style.display='none';
 
   document.getElementById('h-turn').textContent=G.turn;
+
   const pPct=Math.min(50,S.pop/POP_WIN*100),aPct=Math.min(50,AI_S.pop/POP_WIN*100);
   document.getElementById('pop-p').textContent=fmtPop(S.pop);document.getElementById('pop-a').textContent=fmtPop(AI_S.pop);
   document.getElementById('pop-bar-p').style.width=pPct+'%';document.getElementById('pop-bar-a').style.width=aPct+'%';
 
-  const wealthUnlocked=ERAS[S.eraI].wealthUnlocked;
-  document.getElementById('res-wealth-block').style.display=wealthUnlocked?'':'none';
-  document.getElementById('res-wealth-div').style.display=wealthUnlocked?'':'none';
+  const wu=ERAS[S.eraI].wealthUnlocked;
+  document.getElementById('res-wealth-block').style.display=wu?'':'none';
+  document.getElementById('res-wealth-div').style.display=wu?'':'none';
   document.getElementById('r-food').textContent=Math.floor(S.food);
   document.getElementById('r-food-r').textContent=(S.fR>=0?'+':'')+S.fR.toFixed(0)+'/t';
   document.getElementById('r-food-r').className='rr'+(S.fR<0?' neg':'');
@@ -862,10 +971,9 @@ function updateUI(){
   document.getElementById('r-wealth-r').textContent=(S.wR>=0?'+':'')+S.wR.toFixed(0)+'/t';
   document.getElementById('r-energy').textContent=Math.floor(S.energy);
   document.getElementById('r-energy-r').textContent=(S.eR>=0?'+':'')+S.eR.toFixed(0)+'/t';
+  document.getElementById('r-sci').textContent=Math.floor(S.science);
+  document.getElementById('r-sci-r').textContent=(S.sciR>=0?'+':'')+S.sciR.toFixed(0)+'/t';
   document.getElementById('r-cap').textContent=fmtPop(S.cap);
-
-  document.getElementById('m-mil').style.width=S.military+'%';document.getElementById('v-mil').textContent=S.military;
-  document.getElementById('m-sta').style.width=S.stability+'%';document.getElementById('v-sta').textContent=S.stability;
 
   const ev=G.env;
   document.getElementById('env-fill').style.width=ev+'%';
@@ -876,32 +984,15 @@ function updateUI(){
   document.getElementById('infl-a').style.width=(G.inflA/2)+'%';
   document.getElementById('infl-val').textContent=Math.round(G.inflP)+'/'+Math.round(G.inflA);
   document.getElementById('infl-lbl-p').style.color=G.inflP>=G.inflA?PL.c:AI.c;
+  document.getElementById('sta-fill').style.width=S.stability+'%';
+  document.getElementById('sta-fill').style.background=S.stability>=60?'#27ae60':S.stability>=30?'#e6b800':'#e63300';
+  document.getElementById('v-sta').textContent=S.stability;
+  document.getElementById('v-sta').style.color=S.stability>=60?'#27ae60':S.stability>=30?'#e6b800':'#e63300';
 
-  for(let i=1;i<=3;i++)document.getElementById('ap'+i).className='ap-dot'+(i>S.ap?' used':'');
-  document.getElementById('ap-txt').textContent=S.ap+' action'+(S.ap!==1?'s':'')+' left';
-
-  const sc=ERAS[S.eraI].settle;
-  const costParts=[];
-  if(sc.cost.f)costParts.push(sc.cost.f+'🌾');
-  if(sc.cost.w)costParts.push(sc.cost.w+'💰');
-  if(sc.cost.e)costParts.push(sc.cost.e+'⚡');
-  document.getElementById('lb-build').innerHTML=sc.name+'<br>'+costParts.join(' ');
-
-  document.getElementById('btn-expand').disabled=S.ap<1||S.food<1;
-  document.getElementById('btn-build').disabled=S.ap<1||(sc.cost.f&&S.food<sc.cost.f)||(sc.cost.w&&S.wealth<sc.cost.w)||(sc.cost.e&&S.energy<sc.cost.e);
-  document.getElementById('btn-war').disabled=S.ap<2||S.energy<2;
-  document.getElementById('btn-infl').className='ab'+(ERAS[S.eraI].infl?'':' locked');
-  document.getElementById('btn-infl').disabled=!ERAS[S.eraI].infl||S.ap<1||S.energy<1;
+  document.getElementById('btn-build').disabled=S.actedThisTurn;
+  document.getElementById('btn-war').disabled=S.actedThisTurn||S.attackedThisTurn||S.energy<2;
 }
 
-function showEvt(ev,stab){
-  stab=stab||S.stability;
-  document.getElementById('ei').textContent=ev.icon;document.getElementById('et').textContent=ev.title;
-  document.getElementById('ed').textContent=typeof ev.desc==='function'?ev.desc(stab):ev.desc;
-  const fxList=typeof ev.fx==='function'?ev.fx(stab):ev.fx;
-  document.getElementById('efx').innerHTML=fxList.map(f=>'<div class="'+(f.b?'fb':'fg')+'">'+(f.b?'▼':'▲')+' '+f.t+'</div>').join('');
-  document.getElementById('evt-wrap').classList.add('on');
-}
 function closeEvt(){document.getElementById('evt-wrap').classList.remove('on');updateUI();render();}
 let tT;
 function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');clearTimeout(tT);tT=setTimeout(()=>el.classList.remove('show'),2800);}
