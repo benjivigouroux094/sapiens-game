@@ -476,7 +476,6 @@ function newGame(){
   selCell=null;
   document.getElementById('final-badge').classList.remove('on');
   document.getElementById('win-wrap').classList.remove('on');
-  setMapHeight();
   initGame();
 }
 
@@ -486,18 +485,8 @@ function newGame(){
 const cv=document.getElementById('c'),ctx=cv.getContext('2d');
 const mw=document.getElementById('map-wrap');
 
-function setMapHeight(){
-  const used=document.getElementById('map-wrap').offsetTop;
-  const bottom=document.querySelector('.act-bar').offsetHeight+
-    document.querySelector('.info-bar').offsetHeight;
-  const h=window.innerHeight-used-bottom;
-  mw.style.height=Math.max(120,h)+'px';
-  mw.style.flex='none';
-}
 function getWH(){
-  const W=mw.offsetWidth||window.innerWidth;
-  const H=mw.offsetHeight||120;
-  return{W,H};
+  return{W:mw.offsetWidth,H:mw.offsetHeight};
 }
 function hXY(col,row){
   const h=hs(),{W,H}=getWH();
@@ -581,9 +570,8 @@ function drawBadge(owner,lbl,col,bg){
 
 function render(){
   const{W,H}=getWH();
-  if(!W||!H){requestAnimationFrame(render);return;}
+  if(!W||!H){setTimeout(render,50);return;}
   cv.width=W;cv.height=H;
-  cv.style.width=W+'px';cv.style.height=H+'px';
   ctx.fillStyle='#0d1f35';ctx.fillRect(0,0,W,H);
   // Ocean waves
   ctx.strokeStyle='rgba(255,255,255,0.04)';ctx.lineWidth=1;
@@ -624,7 +612,7 @@ function selC(c){
 
 cv.addEventListener('click',e=>{const r=cv.getBoundingClientRect();selC(nearCell((e.clientX-r.left)*(cv.width/r.width),(e.clientY-r.top)*(cv.height/r.height)));});
 cv.addEventListener('touchstart',e=>{e.preventDefault();const t=e.touches[0],r=cv.getBoundingClientRect();selC(nearCell((t.clientX-r.left)*(cv.width/r.width),(t.clientY-r.top)*(cv.height/r.height)));},{passive:false});
-window.addEventListener('resize',()=>{setMapHeight();render();});
+window.addEventListener('resize',render);
 
 // ═══════════════════════════════
 // ADJACENCY
@@ -959,7 +947,7 @@ function closeEvt(){document.getElementById('evt-wrap').classList.remove('on');u
 let tT;
 function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');clearTimeout(tT);tT=setTimeout(()=>el.classList.remove('show'),2800);}
 
-requestAnimationFrame(()=>requestAnimationFrame(()=>{setMapHeight();initGame();}));
+requestAnimationFrame(()=>requestAnimationFrame(initGame));
 </script>
 </body>
 </html>
