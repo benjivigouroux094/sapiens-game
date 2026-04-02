@@ -573,6 +573,8 @@ function render(){
   if(!W||!H){setTimeout(render,50);return;}
   cv.width=W;cv.height=H;
   ctx.fillStyle='#0d1f35';ctx.fillRect(0,0,W,H);
+  // DEBUG: draw a red dot at center to confirm canvas works
+  ctx.fillStyle='red';ctx.fillRect(W/2-5,H/2-5,10,10);
   // Ocean waves
   ctx.strokeStyle='rgba(255,255,255,0.04)';ctx.lineWidth=1;
   for(let i=0;i<14;i++){ctx.beginPath();for(let x=0;x<W;x+=20){const y=18*i+4;x===0?ctx.moveTo(x,y):ctx.quadraticCurveTo(x-10,y-3,x,y);}ctx.stroke();}
@@ -789,6 +791,8 @@ function endTurn(){
   }
   S.ap=3;G.turn++;
   recalc();updateUI();render();
+  const{W,H}=getWH();
+  toast('Canvas: '+W+'×'+H+' hs:'+hs().toFixed(0));
   toast('Turn '+G.turn+' — pop '+fmtPop(S.pop)+' / cap '+fmtPop(S.cap));
 }
 
