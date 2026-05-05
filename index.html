@@ -1,0 +1,1891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Sapiens</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+body{background:#07151f;color:#e0e8f0;font-family:'Segoe UI',sans-serif;height:100dvh;display:flex;flex-direction:column;overflow:hidden;user-select:none;}
+#hdr{background:#0a1825;border-bottom:1px solid rgba(255,255,255,0.08);padding:4px 8px;display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.hdr-left{display:flex;flex-direction:column;gap:1px;min-width:0;}
+.hdr-right{display:flex;align-items:center;gap:6px;margin-left:auto;}
+.hdr-stat{font-size:9px;color:#7a9ab0;white-space:nowrap;}
+.hdr-stat span{color:#f0b429;font-weight:700;}
+.new-btn{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:6px;color:#aac;font-size:11px;padding:4px 8px;cursor:pointer;}
+.final-badge{background:#e05030;border-radius:4px;font-size:8px;font-weight:700;padding:2px 5px;display:none;}
+.final-badge.on{display:block;}
+/* pop bars */
+#pop-wrap{background:#0a1825;padding:3px 8px;border-bottom:1px solid rgba(255,255,255,0.06);flex-shrink:0;width:100%;}
+.pop-row{display:flex;align-items:center;width:100%;margin-bottom:2px;}
+.pop-row:last-child{margin-bottom:0;}
+.pop-bar-wrap{flex:1;padding:0 4px;}
+.pop-lbl{width:70px;font-size:12px;font-weight:700;white-space:nowrap;}
+.pop-bar-wrap{padding:0 4px;}
+.pop-bar-bg{position:relative;height:14px;background:rgba(255,255,255,0.06);border-radius:7px;overflow:hidden;}
+.pop-bar-cap{position:absolute;left:0;top:0;bottom:0;width:0%;border-radius:5px;transition:width 0.4s;}
+.pop-bar-pop{position:absolute;left:0;top:0;bottom:0;width:0%;border-radius:5px;transition:width 0.4s;}
+.pop-val{width:120px;text-align:right;font-size:14px;font-weight:900;white-space:nowrap;}
+/* era bar */
+.era-bar{background:#0a1825;padding:4px 8px;border-bottom:1px solid rgba(255,255,255,0.06);flex-shrink:0;display:flex;flex-direction:column;width:100%;}
+.era-name{font-size:9px;font-weight:700;}
+.era-pct{font-size:8px;color:#aac;}
+.era-row{display:flex;align-items:center;gap:4px;padding-top:2px;}
+.bonus-badge{font-size:8px;color:#f0b429;}
+/* resource bars */
+  .res-bars{background:#0a1825;padding:6px 8px 7px;border-bottom:1px solid rgba(255,255,255,0.06);flex-shrink:0;width:100%;}
+.res-bar{display:flex;align-items:center;justify-content:space-between;padding:4px 0;width:100%;}
+.res-row-lbl{font-size:12px;color:#6a8aaa;width:16px;flex-shrink:0;}
+.res{display:flex;align-items:center;gap:3px;flex:1;justify-content:center;}
+.ri{font-size:20px;line-height:1;flex-shrink:0;}
+.rv{font-size:15px;font-weight:800;color:#f0b429;line-height:1;}
+.rdiv{width:1px;height:18px;background:rgba(255,255,255,0.1);}
+.rn{font-size:7px;color:#6a8aaa;}
+/* map */
+#map-wrap{position:relative;flex:1;background:#0d1f35;overflow:hidden;min-height:0;}
+#c{display:block;width:100%;height:100%;}
+/* top buttons */
+#top-btns{position:absolute;top:6px;right:6px;display:flex;gap:6px;z-index:40;}
+.top-btn{background:rgba(7,21,37,0.92);border-radius:8px;font-size:11px;padding:5px 10px;cursor:pointer;}
+/* hex popup */
+#hex-popup{position:absolute;z-index:50;display:none;min-width:140px;max-width:200px;}
+#hex-popup-inner{background:rgba(7,18,32,0.97);border:1px solid rgba(255,255,255,0.15);border-radius:10px;padding:6px 7px;box-shadow:0 4px 20px rgba(0,0,0,0.5);}
+#hex-popup-name{font-size:10px;font-weight:700;color:#e0e8f0;margin-bottom:4px;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:3px;}
+#hex-popup-btns{display:flex;flex-direction:column;gap:3px;}
+/* modals */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:100;display:none;align-items:center;justify-content:center;}
+.overlay.on{display:flex;}
+.modal{background:#0d1f35;border:1px solid rgba(255,255,255,0.15);border-radius:14px;padding:16px;max-width:320px;width:90%;max-height:85dvh;overflow-y:auto;}
+.modal p{font-size:10px;color:#aac;line-height:1.5;margin-bottom:8px;}
+.modal .fx{background:rgba(255,255,255,0.04);border-radius:5px;padding:6px;margin-bottom:8px;text-align:left;font-size:10px;display:flex;flex-direction:column;gap:2px;}
+.spec-opts{display:flex;flex-direction:column;gap:7px;margin-top:8px;}
+.spec-btn{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:9px;padding:8px 10px;cursor:pointer;text-align:left;color:#e0e8f0;display:flex;gap:8px;align-items:flex-start;}
+.spec-btn:hover{background:rgba(255,255,255,0.1);}
+.spec-icon{font-size:20px;line-height:1;}
+.spec-info{display:flex;flex-direction:column;gap:2px;}
+.spec-name{font-size:11px;font-weight:700;}
+.spec-desc{font-size:9px;color:#aac;line-height:1.4;}
+.modal-title{font-size:13px;font-weight:700;margin-bottom:4px;}
+.modal-sub{font-size:9px;color:#aac;margin-bottom:10px;}
+.modal-cancel{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:#aac;font-size:10px;padding:7px 14px;cursor:pointer;width:100%;margin-top:8px;}
+/* build modal */
+.build-modal{background:#0d1f35;border:1px solid rgba(255,255,255,0.15);border-radius:14px;padding:12px;max-width:310px;width:92%;max-height:88dvh;overflow-y:auto;}
+.build-title{font-size:12px;font-weight:700;margin-bottom:2px;}
+.build-sub{font-size:9px;color:#6a8aaa;margin-bottom:8px;}
+.build-btn{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:7px 8px;cursor:pointer;text-align:left;color:#e0e8f0;display:flex;gap:7px;align-items:center;width:100%;margin-bottom:4px;}
+.build-btn:disabled{opacity:0.38;cursor:default;}
+.build-btn:not(:disabled):hover{background:rgba(255,255,255,0.1);}
+.b-icon{font-size:16px;flex-shrink:0;}
+.b-info{display:flex;flex-direction:column;gap:1px;}
+.b-name{font-size:10px;font-weight:700;}
+.b-eff{font-size:8px;color:#5a9;}
+.b-cost{font-size:8px;color:#f0b429;}
+.build-cancel{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:#aac;font-size:10px;padding:7px 14px;cursor:pointer;width:100%;margin-top:4px;}
+.build-section{font-size:8px;color:#5a7a9a;padding:4px 0 2px;border-top:1px solid rgba(255,255,255,0.06);margin-top:2px;}
+/* market */
+.market-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px;}
+.m-cell{background:rgba(255,255,255,0.04);border-radius:7px;padding:8px;text-align:center;cursor:pointer;border:1px solid rgba(255,255,255,0.08);}
+.m-cell:hover{background:rgba(255,255,255,0.09);}
+.m-cell.disabled{opacity:0.35;cursor:default;}
+.m-icon{font-size:20px;margin-bottom:3px;}
+.m-label{font-size:8px;color:#aac;}
+.m-val{font-size:11px;font-weight:700;color:#f0b429;}
+/* toast */
+#toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:rgba(10,24,37,0.95);border:1px solid rgba(255,255,255,0.18);border-radius:10px;padding:7px 14px;font-size:11px;color:#e0e8f0;z-index:200;pointer-events:none;opacity:0;transition:opacity 0.3s;white-space:nowrap;max-width:90vw;text-overflow:ellipsis;overflow:hidden;}
+#toast.on{opacity:1;}
+/* battle overlay */
+#battle-overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:300;pointer-events:none;opacity:0;transition:opacity 0.15s;}
+#battle-overlay.on{opacity:1;}
+#battle-msg{font-size:36px;font-weight:900;padding:24px 36px;border-radius:20px;border:3px solid;text-align:center;letter-spacing:1px;text-shadow:0 2px 12px rgba(0,0,0,0.8);box-shadow:0 0 60px rgba(0,0,0,0.6);backdrop-filter:blur(4px);line-height:1.3;}
+/* win screen */
+#win-wrap{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:400;display:none;align-items:center;justify-content:center;}
+#win-wrap.on{display:flex;}
+#win-box{background:#0d1f35;border:2px solid #f0b429;border-radius:16px;padding:24px;max-width:300px;width:90%;text-align:center;}
+#win-title{font-size:22px;font-weight:900;margin-bottom:8px;}
+#win-sub{font-size:12px;color:#aac;margin-bottom:16px;}
+</style>
+</head>
+<body>
+<!-- HEADER -->
+<div id="hdr">
+  <div class="hdr-left">
+    <div class="hdr-stat">Turn <span id="h-turn">1</span></div>
+  </div>
+  <div class="hdr-right">
+    <div class="final-badge" id="final-badge">FINAL</div>
+    <button class="new-btn" onclick="newGame()">⟳</button>
+  </div>
+</div>
+
+<!-- POP BARS -->
+<div id="pop-wrap">
+  <div class="pop-row">
+    <div class="pop-lbl" id="pop-p-lbl" style="color:#4a9eff">🧑 You</div>
+    <div class="pop-bar-wrap">
+      <div class="pop-bar-bg">
+        <div class="pop-bar-cap" id="cap-bar-p" style="background:rgba(74,158,255,0.25);"></div>
+        <div class="pop-bar-pop" id="pop-bar-p" style="background:#4a9eff;"></div>
+      </div>
+    </div>
+    <div class="pop-val" style="color:#4a9eff;">👥<span id="pop-p">10</span> 🏠<span id="cap-p" style="color:#7a9ab0;">0</span></div>
+  </div>
+  <div class="pop-row">
+    <div class="pop-lbl" id="pop-a-lbl" style="color:#e05030">⚔️ Them</div>
+    <div class="pop-bar-wrap">
+      <div class="pop-bar-bg">
+        <div class="pop-bar-cap" id="cap-bar-a" style="background:rgba(224,80,48,0.25);"></div>
+        <div class="pop-bar-pop" id="pop-bar-a" style="background:#e05030;"></div>
+      </div>
+    </div>
+    <div class="pop-val" style="color:#e05030;">👥<span id="pop-a">10</span> 🏠<span id="cap-a" style="color:#7a9ab0;">0</span></div>
+  </div>
+</div>
+
+<!-- ERA BAR -->
+<div style="background:#0a1825;padding:4px 8px;border-bottom:1px solid rgba(255,255,255,0.06);flex-shrink:0;display:flex;align-items:center;width:100%;box-sizing:border-box;">
+  <div style="font-size:14px;font-weight:900;color:#4a9eff;white-space:nowrap;" id="era-name">Era 1 — Ancient</div>
+  <div style="flex:1;"></div>
+  <div style="font-size:14px;font-weight:900;color:#e05030;white-space:nowrap;" id="era-name-a">Era 1 — Ancient</div>
+  <div style="display:none;" id="era-pct"></div>
+  <div id="bonus-row" style="display:none;font-size:8px;color:#f0b429;margin-left:8px;"><span id="bonus-badge"></span></div>
+</div>
+
+<!-- RESOURCE BARS -->
+<div class="res-bars">
+  <div class="res-bar">
+    <div class="res-row-lbl">🍽️</div>
+    <div class="res"><div class="ri">🌾</div><div class="rv" id="r-cer">0</div></div>
+    <div class="rdiv"></div>
+    <div class="res"><div class="ri">🥩</div><div class="rv" id="r-mea">0</div></div>
+    <div class="rdiv"></div>
+    <div class="res"><div class="ri">🍌</div><div class="rv" id="r-fis">0</div></div>
+    <div class="rdiv"></div>
+    <div class="res"><div class="rv" id="r-net" style="color:#2ecc71">+0/t</div></div>
+  </div>
+  <div class="res-bar">
+    <div class="res-row-lbl">⚡</div>
+    <div class="res"><div class="ri">🪵</div><div class="rv" id="r-wod">20</div></div>
+    <div class="rdiv"></div>
+    <div class="res"><div class="ri">🛢️</div><div class="rv" id="r-oil">0</div></div>
+    <div class="rdiv"></div>
+    <div class="res"><div class="ri">☢️</div><div class="rv" id="r-nuc">0</div></div>
+    <div class="rdiv"></div>
+    <div class="res"><div class="rv" id="r-enet" style="color:#2ecc71">+0/t</div></div>
+  </div>
+</div>
+
+<!-- MAP -->
+<div id="map-wrap">
+  <div id="top-btns">
+    <button class="top-btn" id="btn-trade" onclick="doAction('market')" style="border:1px solid rgba(240,180,41,0.5);color:#f0b429;display:none;">🏪 Trade</button>
+    <button class="top-btn" onclick="doSkip()" style="border:1px solid rgba(255,255,255,0.2);color:#aac;">⏭️ Pass</button>
+  </div>
+  <canvas id="c"></canvas>
+  <div id="hex-popup">
+    <div id="hex-popup-inner">
+      <div id="hex-popup-name">Hex</div>
+      <div id="hex-popup-btns"></div>
+    </div>
+  </div>
+</div>
+
+<!-- SPEC MODAL -->
+<div class="overlay" id="spec-wrap">
+  <div class="modal">
+    <div class="modal-title">🌟 Era Transition</div>
+    <div class="modal-sub" id="spec-sub">Choose your specialization</div>
+    <div id="spec-default" style="font-size:9px;color:#aac;margin-bottom:8px;"></div>
+    <div class="spec-opts" id="spec-options"></div>
+  </div>
+</div>
+
+<!-- BUILD MODAL -->
+<div class="overlay" id="build-wrap">
+  <div class="build-modal">
+    <div class="build-title" id="build-title">Build</div>
+    <div class="build-sub" id="build-sub"></div>
+    <div id="build-options"></div>
+    <button class="build-cancel" onclick="document.getElementById('build-wrap').classList.remove('on')">Cancel</button>
+  </div>
+</div>
+
+<!-- MARKET MODAL -->
+<div class="overlay" id="market-wrap">
+  <div class="modal">
+    <div class="modal-title">🏪 Market</div>
+    <div class="modal-sub">Trade resources — 2:1 with Trading bonus, otherwise 10:1 (max 100)</div>
+    <div id="market-content"></div>
+    <button class="modal-cancel" onclick="document.getElementById('market-wrap').classList.remove('on')">Close</button>
+  </div>
+</div>
+
+<!-- WIN SCREEN -->
+<div id="win-wrap">
+  <div id="win-box">
+    <div id="win-title">🏆 Victory!</div>
+    <div id="win-sub"></div>
+    <button class="new-btn" style="margin:0 auto;display:block;padding:10px 24px;font-size:13px;" onclick="newGame()">Play Again</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+<!-- BATTLE OVERLAY -->
+<div id="battle-overlay"><div id="battle-msg"></div></div>
+
+<script>
+'use strict';
+// ═══════════════════════════════════════
+// CONSTANTS & DATA
+// ═══════════════════════════════════════
+const ROWS=9,COLS=9;
+const POP_WIN=1000000;
+const CAP_MULT=3;
+
+const ERAS=[
+  {name:'Ancient',    icon:'🌿', foodMult:1,   weapon:0.0001},
+  {name:'Classical',  icon:'🏛️', foodMult:1.5, weapon:0.0002},
+  {name:'Medieval',   icon:'⚔️', foodMult:2,   weapon:0.0005},
+  {name:'Industrial', icon:'🏭', foodMult:3,   weapon:0.001},
+  {name:'Modern',     icon:'🌐', foodMult:5,   weapon:0.003},
+];
+
+const ERA_SETTLE=['camp','village','city','indcity','metro'];
+const ERA_UPGRADE=['upvillage','upcity','upindcity','upmetro'];
+
+// Science building chain — higher tier satisfies lower tier requirement
+const SCIENCE_CHAIN=['scrip','library','academy','lab','resctr'];
+const ERA_SCIENCE_REQS=[null,'scrip','library','academy','lab'];
+
+const T={
+  sea:   {bg:'#0d3a5c',brd:'#0a2d47',label:'Ocean'},
+  cst:   {bg:'#1a5c8a',brd:'#0f3d5e',label:'Coastal'},
+  cer:   {bg:'#3d6b1a',brd:'#2d5010',label:'Cereal'},
+  ani:   {bg:'#5c4a10',brd:'#3d3008',label:'Animal'},
+  jgl:   {bg:'#1a6b35',brd:'#0d4a20',label:'Jungle'},
+  woods: {bg:'#1a4a2a',brd:'#0f3018',label:'Woods'},
+  fuel:  {bg:'#3a3a1a',brd:'#252510',label:'Fuel'},
+  nuclear:{bg:'#2a1a3a',brd:'#1a0f28',label:'Uranium'},
+};
+
+// Buildings
+const B={
+  // Settlements
+  camp:    {icon:'🛖', name:'Camp',            era:0,type:'settle', terrain:'land',  cap:20000,   cost:{wod:5},   eff:{}},
+  village: {icon:'🏘️', name:'Village',         era:1,type:'settle', terrain:'land',  cap:60000,   cost:{wod:15},  eff:{}},
+  city:    {icon:'🏙️', name:'City',            era:2,type:'settle', terrain:'land',  cap:100000,  cost:{wod:30},  eff:{}},
+  indcity: {icon:'🏭', name:'Industrial City', era:3,type:'settle', terrain:'land',  cap:500000,  cost:{oil:15},  eff:{}},
+  metro:   {icon:'🌆', name:'Metropolis',      era:4,type:'settle', terrain:'land',  cap:1000000, cost:{nuc:10},  eff:{}},
+  // Upgrade versions (replace existing settlement on same hex)
+  upvillage:{icon:'🏘️',name:'Upgrade→Village', era:1,type:'upgrade',terrain:'land',  cap:60000,   cost:{wod:25},  eff:{}, upgrades:'camp'},
+  upcity:   {icon:'🏙️',name:'Upgrade→City',    era:2,type:'upgrade',terrain:'land',  cap:100000,  cost:{wod:50},  eff:{}, upgrades:'village'},
+  upindcity:{icon:'🏭',name:'Upgrade→Ind.City',era:3,type:'upgrade',terrain:'land',  cap:500000,  cost:{oil:25},  eff:{}, upgrades:'city'},
+  upmetro:  {icon:'🌆',name:'Upgrade→Metropolis',era:4,type:'upgrade',terrain:'land', cap:1000000, cost:{nuc:18},  eff:{}, upgrades:'indcity'},
+  // Food - Cereal
+  farm:      {icon:'🌾', name:'Farm',          era:0,type:'food', terrain:'cer',    cap:0, cost:{wod:5},   eff:{cerR:9}},
+  granary:   {icon:'🏪', name:'Granary',       era:1,type:'food', terrain:'cer',    cap:0, cost:{wod:15},  eff:{cerR:27}, upgrades:'farm'},
+  plant:     {icon:'🌱', name:'Plantation',    era:2,type:'food', terrain:'cer',    cap:0, cost:{wod:30},  eff:{cerR:81}, upgrades:'granary'},
+  ifarm:     {icon:'🚜', name:'Ind. Farm',     era:3,type:'food', terrain:'cer',    cap:0, cost:{oil:15},  eff:{cerR:243}, upgrades:'plant'},
+  sfarm:     {icon:'🤖', name:'Smart Farm',    era:4,type:'food', terrain:'cer',    cap:0, cost:{nuc:10},  eff:{cerR:729}, upgrades:'ifarm'},
+  // Food - Animal
+  ranch:     {icon:'🐄', name:'Ranch',         era:0,type:'food', terrain:'ani',    cap:0, cost:{wod:5},   eff:{meaR:18}},
+  butchery:  {icon:'🥩', name:'Butchery',      era:1,type:'food', terrain:'ani',    cap:0, cost:{wod:15},  eff:{meaR:54}, upgrades:'ranch'},
+  slaught:   {icon:'🏭', name:'Slaughterhouse',era:2,type:'food', terrain:'ani',    cap:0, cost:{wod:30},  eff:{meaR:162}, upgrades:'butchery'},
+  iranch:    {icon:'🚜', name:'Ind. Ranch',    era:3,type:'food', terrain:'ani',    cap:0, cost:{oil:15},  eff:{meaR:486}, upgrades:'slaught'},
+  sranch:    {icon:'🤖', name:'Smart Ranch',   era:4,type:'food', terrain:'ani',    cap:0, cost:{nuc:10},  eff:{meaR:1458}, upgrades:'iranch'},
+  // Food - Jungle
+  gatherer:  {icon:'🍌', name:'Jungle Camp',   era:0,type:'food', terrain:'jgl',    cap:0, cost:{wod:10},  eff:{fisR:60}},
+  // Maritime / Coastal
+  domeshield:{icon:'🔮', name:'Dome Shield',   era:4,type:'defense',terrain:'land', cap:0, cost:{nuc:5}, eff:{}},
+  harbour:   {icon:'⚓', name:'Harbour',        era:2,type:'maritime',terrain:'cst', cap:0, cost:{wod:20},  eff:{}},
+  fleet:     {icon:'🚢', name:'Fleet',          era:3,type:'maritime',terrain:'cst', cap:0, cost:{oil:10},  eff:{}, upgrades:'harbour'},
+  sfleet:    {icon:'🤖', name:'Smart Fishery',  era:4,type:'maritime',terrain:'cst', cap:0, cost:{nuc:8},   eff:{}, upgrades:'fleet'},
+  // Energy - Wood
+  logcamp:   {icon:'🪓', name:'Logging Camp',  era:0,type:'energy', terrain:'woods', cap:0, cost:{wod:5},   eff:{wodR:12}},
+  sawmill:   {icon:'🏚️', name:'Sawmill',        era:1,type:'energy', terrain:'woods', cap:0, cost:{wod:15},  eff:{wodR:36},  upgrades:'logcamp'},
+  timber:    {icon:'🌲', name:'Timber Mill',   era:2,type:'energy', terrain:'woods', cap:0, cost:{wod:30},  eff:{wodR:108}, upgrades:'sawmill'},
+  wfactory:  {icon:'⚙️', name:'Wood Factory',  era:3,type:'energy', terrain:'woods', cap:0, cost:{oil:15},  eff:{wodR:324}, upgrades:'timber'},
+  sfactory:  {icon:'🤖', name:'Smart Factory', era:4,type:'energy', terrain:'woods', cap:0, cost:{nuc:10},  eff:{wodR:972}, upgrades:'wfactory'},
+  // Energy - Oil
+  oilrig:    {icon:'🛢️', name:'Oil Rig',       era:2,type:'energy', terrain:'fuel',  cap:0, cost:{wod:20},  eff:{oilMult:2}},
+  refinery:  {icon:'🏭', name:'Refinery',      era:3,type:'energy', terrain:'fuel',  cap:0, cost:{oil:20},  eff:{oilMult:4}, upgrades:'oilrig'},
+  mrefine:   {icon:'🤖', name:'Mega Refinery', era:4,type:'energy', terrain:'fuel',  cap:0, cost:{nuc:10},  eff:{oilMult:8}, upgrades:'refinery'},
+  // Energy - Nuclear
+  nuclear:   {icon:'☢️', name:'Nuclear Plant', era:4,type:'energy', terrain:'nuclear',cap:0, cost:{oil:20},  eff:{nucMult:2}},
+  fusion:    {icon:'⚛️', name:'Fusion Reactor',era:4,type:'energy', terrain:'nuclear',cap:0, cost:{oil:40},  eff:{nucMult:4}, upgrades:'nuclear'},
+  // Science
+  scrip:     {icon:'📖', name:'Scriptorium',   era:0,type:'science', terrain:'land',  cap:0, cost:{energy:20,food:20},  eff:{sciR:18}},
+  library:   {icon:'📚', name:'Library',       era:1,type:'science', terrain:'land',  cap:0, cost:{energy:40,food:40},  eff:{sciR:54}},
+  academy:   {icon:'🏫', name:'Academy',       era:2,type:'science', terrain:'land',  cap:0, cost:{energy:60,food:40},  eff:{sciR:162}},
+  lab:       {icon:'🔬', name:'Laboratory',    era:3,type:'science', terrain:'land',  cap:0, cost:{energy:80,food:60},  eff:{sciR:324}},
+  resctr:    {icon:'🖥️', name:'Research Ctr',  era:4,type:'science', terrain:'land',  cap:0, cost:{energy:100,food:80}, eff:{sciR:648}},
+  // Science upgrades (replace existing on same hex, ~50% more expensive)
+  uplibrary: {icon:'📚', name:'Upgrade→Library',  era:1,type:'sciupgrade',terrain:'land', cap:0, cost:{energy:60,food:60},  eff:{sciR:54},  upgrades:'scrip'},
+  upacademy: {icon:'🏫', name:'Upgrade→Academy',  era:2,type:'sciupgrade',terrain:'land', cap:0, cost:{energy:90,food:60},  eff:{sciR:162}, upgrades:'library'},
+  uplab:     {icon:'🔬', name:'Upgrade→Lab',      era:3,type:'sciupgrade',terrain:'land', cap:0, cost:{energy:120,food:90}, eff:{sciR:324}, upgrades:'academy'},
+  upresctr:  {icon:'🖥️', name:'Upgrade→Res.Ctr', era:4,type:'sciupgrade',terrain:'land', cap:0, cost:{energy:150,food:120},eff:{sciR:648}, upgrades:'lab'},
+  // Army
+  barracks:  {icon:'🪖', name:'Barracks',      era:2,type:'army',   terrain:'land',  cap:0, cost:{wod:20},  eff:{defense:0.2}},
+  airport:   {icon:'✈️', name:'Airport',       era:3,type:'army',   terrain:'land',  cap:0, cost:{oil:20},  eff:{}},
+  tanks:     {icon:'🪖', name:'Tank Depot',    era:3,type:'army',   terrain:'land',  cap:0, cost:{oil:20},  eff:{}},
+};
+
+// Era specs
+const ERA_SPECS=[
+  // Era 1→2
+  [
+    {id:'pastoralism',icon:'🥩',name:'Pastoralism',  unlocks:null,upgrades:null,bonus:{pastoralism:true},  desc:'Unlock Ranch on animal hexes — richer food per hex'},
+    {id:'fertilizer', icon:'🌾',name:'Fertilizer',   unlocks:null,upgrades:null,bonus:{fertilizer:true},   desc:'Cereal farms produce ×2 food permanently'},
+    {id:'pathfinding',icon:'🗺️',name:'Pathfinding',  unlocks:null,upgrades:null,bonus:{pathfinding:true},  desc:'Expand 2 hexes per turn — can skip over unclaimed hexes'},
+  ],
+  // Era 2→3: economic/military
+  [
+    {id:'trading',  icon:'💰',name:'Trading',   unlocks:null,     upgrades:null, bonus:{marketBonus:true},   desc:'Market ratio 2:1 instead of 5:1'},
+    {id:'maritime', icon:'🌊',name:'Maritime',  unlocks:'harbour',upgrades:null, bonus:{coastalExpand:true,navalBombard:true}, desc:'Build Harbour on coastal hex → attack any hex adjacent to sea'},
+    {id:'industrial',icon:'🏭',name:'Industrial Revolution',unlocks:null,upgrades:null,bonus:{industrialBonus:true},desc:'Unlock oil buildings — Oilrig, Refinery, Advanced Refinery'},
+  ],
+  // Era 3→4: military doctrine
+  [
+    {id:'airpower', icon:'✈️',name:'Air Power', unlocks:'airport',upgrades:null, bonus:{airStrike:true},     desc:'Unlock Airport · Air strike any enemy hex'},
+    {id:'infantry', icon:'⚔️',name:'Infantry',  unlocks:'tanks',  upgrades:null, bonus:{tankBonus:true},     desc:'Unlock Tanks · Land attack ×3 win chance'},
+    {id:'espionage', icon:'🕵️',name:'Espionage',   unlocks:null,     upgrades:null, bonus:{espionage:true},     desc:'Your buildings are hidden — enemy cannot scout your strategy'},
+  ],
+  // Era 4→5: endgame
+  [
+    {id:'cyberattack',icon:'💻',name:'Cyberattack',unlocks:null,  upgrades:null, bonus:{cyberAttack:true},    desc:'Steal enemy science · disrupt production'},
+    {id:'nuclear',  icon:'☢️',name:'Nuclear',    unlocks:null,    upgrades:null, bonus:{nuclearArsenal:true}, desc:'Unlock Nuclear Strikes · devastate enemy territory'},
+    {id:'shield',   icon:'🔮',name:'Dome Shield',unlocks:null,    upgrades:null, bonus:{domeShield:true},     desc:'Protect territory from nuclear & cyber attacks'},
+  ],
+];
+
+// Directions for hex grid
+const DE=[[1,0],[-1,0],[0,-1],[-1,-1],[0,1],[-1,1]];
+const DO=[[1,0],[-1,0],[0,-1],[1,-1],[0,1],[1,1]];
+
+// ═══════════════════════════════════════
+// GAME STATE
+// ═══════════════════════════════════════
+const PL={n:'Player',f:'🌍',c:'#4a9eff'};
+const AI={n:'AI',f:'⚔️',c:'#e05030'};
+
+let cells=[];
+let selCell=null;
+
+const S={
+  cer:0,mea:0,fis:0,cerR:0,meaR:0,fisR:0,
+  wod:20,oil:0,nuc:0,wodR:0,oilR:0,nucR:0,
+  science:0,sciR:0,
+  pop:10,cap:0,
+  eraI:0,
+  actedThisTurn:false,
+  specHistory:[],
+  unlockedBuildings:new Set(['camp','farm','logcamp','scrip','gatherer']),
+  bonus:{
+    attackAlways:false,coastalExpand:false,navalBombard:false,
+    pastoralism:false,fertilizer:false,pathfinding:false,
+    airStrike:false,tankBonus:false,industrialBonus:false,
+    cyberAttack:false,marketBonus:false,nuclearArsenal:false,
+    domeShield:false,espionage:false,
+  },
+  domeAnchor:null,
+  cyberCooldown:0,
+};
+
+const AI_S={pop:10,cap:0,eraI:0,science:0,sciR:0,wod:20,oil:0,nuc:0,wodR:0,oilR:0,nucR:0,sciFreeze:0,unlockedSettle:'camp'};
+
+const G={turn:1,over:false,pathPending:false,finalRound:false,finalDone:false,id:0};
+
+// ═══════════════════════════════════════
+// MAP
+// ═══════════════════════════════════════
+function genMap(){
+  const layout=[
+    ['cer','cer','cer','ani','cer','ani','cer','cer','cst'],
+    ['cer','wod','cer','cer','ani','cer','cer','wod','cer'],
+    ['cer','wod','fuel','cer','ani','fuel','cer','wod','cer'],
+    ['cst','cer','cer','jgl','jgl','cst','cer','cer','cer'],
+    ['cer','cer','nuclear','sea','sea','sea','sea','cer','cer'],
+    ['cer','wod','ani','sea','cst','ani','sea','cer','cer'],
+    ['fuel','wod','fuel','sea','fuel','nuclear','sea','wod','cer'],
+    ['cer','wod','cer','sea','sea','sea','sea','wod','cer'],
+    ['cer','cer','ani','fuel','cer','cst','cer','wod','cer'],
+  ];
+  const tmap={sea:'sea',cst:'cst',cer:'cer',ani:'ani',jgl:'jgl',woods:'woods',wod:'woods',fuel:'fuel',nuclear:'nuclear'};
+  const map=[];
+  for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){
+    map.push({col:c,row:r,t:tmap[layout[r][c]]||'cer',owner:null,b1:null,b2:null});
+  }
+  return map;
+}
+
+function cAt(c,r){if(c<0||c>=COLS||r<0||r>=ROWS)return null;return cells[r*COLS+c]||null;}
+
+function nbrs(c){
+  const d=c.row%2===0?DE:DO;
+  return d.map(([dc,dr])=>cAt(c.col+dc,c.row+dr)).filter(Boolean);
+}
+
+// ═══════════════════════════════════════
+// HEX RATES
+// ═══════════════════════════════════════
+function hexRates(c){
+  if(!c)return{};
+  const fm=ERAS[S.eraI].foodMult;
+  switch(c.t){
+    case 'cer':   return{cer:0};  // no passive food - need farm
+    case 'ani':   return{mea:0};  // no passive food - need ranch
+    case 'jgl':   return{fis:0};  // no passive food - need jungle camp
+    case 'woods': return{};
+    case 'fuel':  return{oil:6};
+    case 'nuclear':return{nuc:15};
+    default:      return{};
+  }
+}
+
+function hexFood(c){
+  const r=hexRates(c);
+  return (r.cer||0)+(r.mea||0)+(r.fis||0);
+}
+
+// ═══════════════════════════════════════
+// RECALC
+// ═══════════════════════════════════════
+function recalc(){
+  // Unlock buildings by era
+  if(S.eraI>=4)S.unlockedBuildings.add('nuclear');
+  if(S.eraI>=1){S.unlockedBuildings.add('library');S.unlockedBuildings.add('uplibrary');}
+  if(S.eraI>=2){S.unlockedBuildings.add('academy');S.unlockedBuildings.add('upacademy');}
+  if(S.eraI>=3){S.unlockedBuildings.add('lab');S.unlockedBuildings.add('uplab');}
+  if(S.eraI>=4){S.unlockedBuildings.add('resctr');S.unlockedBuildings.add('upresctr');}
+  // Unlock settlements up to current era
+  for(let i=0;i<=S.eraI&&i<ERA_SETTLE.length;i++)S.unlockedBuildings.add(ERA_SETTLE[i]);
+  // Unlock upgrades
+  if(S.eraI>=1)S.unlockedBuildings.add('upvillage');
+  if(S.eraI>=2)S.unlockedBuildings.add('upcity');
+  if(S.eraI>=3)S.unlockedBuildings.add('upindcity');
+  if(S.eraI>=4)S.unlockedBuildings.add('upmetro');
+
+  const own=cells.filter(c=>c.owner==='p');
+  let baseCer=0,baseMea=0,baseFis=0,baseWod=0,baseOil=0,baseNuc=0;
+  let oilMult=1,nucMult=1;
+  let wodRsum=0,sciRsum=0;
+  const fm=ERAS[S.eraI].foodMult;
+
+  own.forEach(c=>{
+    const r=hexRates(c);
+    baseOil+=(r.oil||0);baseNuc+=(r.nuc||0);
+    [c.b1,c.b2].forEach(bid=>{
+      const b=B[bid];if(!b)return;
+      // Flat food rates from buildings (scaled by foodMult)
+      if(b.eff.cerR)baseCer+=b.eff.cerR*fm*(S.bonus.fertilizer?2:1);
+      if(b.eff.meaR)baseMea+=b.eff.meaR*fm;
+      if(b.eff.fisR)baseFis+=b.eff.fisR*fm;
+      if(b.eff.oilMult&&b.eff.oilMult>oilMult)oilMult=b.eff.oilMult;
+      if(b.eff.nucMult&&b.eff.nucMult>nucMult)nucMult=b.eff.nucMult;
+      if(b.eff.wodR)wodRsum+=b.eff.wodR;
+      if(b.eff.sciR)sciRsum+=b.eff.sciR;
+    });
+  });
+
+  S.cerR=Math.floor(baseCer);
+  S.meaR=Math.floor(baseMea);
+  S.fisR=Math.floor(baseFis);
+  S.wodR=Math.floor(wodRsum);
+  S.oilR=Math.floor(baseOil*oilMult);
+  S.nucR=Math.floor(baseNuc*nucMult);
+  S.sciR=sciRsum;
+
+  // Cap from settlements
+  S.cap=own.reduce((s,c)=>s+settleCap(c),0);
+  // AI cap
+  AI_S.cap=cells.filter(c=>c.owner==='a').reduce((s,c)=>{
+    const b1=c.b1?B[c.b1]:null,b2=c.b2?B[c.b2]:null;
+    return s+(b1&&b1.cap?b1.cap:0)+(b2&&b2.cap?b2.cap:0)+buildingCapBonus(b1)+buildingCapBonus(b2);
+  },0);
+
+  if(S.cap>0&&S.pop>S.cap){S.pop=S.cap;toast('🏠 Overcrowding! −pop');}
+  if(AI_S.cap>0&&AI_S.pop>AI_S.cap)AI_S.pop=AI_S.cap;
+}
+
+function buildingCapBonus(b){
+  if(!b||b.type==='settle'||b.type==='upgrade')return 0;
+  const era=b.era||0;
+  if(era<=1)return 1000;
+  if(era<=2)return 3000;
+  return 5000;
+}
+function settleCap(c){
+  if(!c)return 0;
+  const b1=c.b1?B[c.b1]:null,b2=c.b2?B[c.b2]:null;
+  const settlePart=(b1&&b1.cap?b1.cap:0)+(b2&&b2.cap?b2.cap:0);
+  const buildingPart=buildingCapBonus(b1)+buildingCapBonus(b2);
+  return settlePart+buildingPart;
+}
+
+// ═══════════════════════════════════════
+// SCIENCE / ERA
+// ═══════════════════════════════════════
+function eraSciMet(){
+  if(S.eraI>=ERAS.length-1)return false;
+  const req=ERA_SCIENCE_REQS[S.eraI+1];
+  if(!req)return false;
+  const reqIdx=SCIENCE_CHAIN.indexOf(req);
+  return cells.some(c=>c.owner==='p'&&[c.b1,c.b2].some(b=>b&&SCIENCE_CHAIN.indexOf(b)>=reqIdx));
+}
+
+function eraSciRegress(){
+  if(S.eraI===0)return;
+  const req=ERA_SCIENCE_REQS[S.eraI];
+  if(!req)return;
+  const reqIdx=SCIENCE_CHAIN.indexOf(req);
+  const has=cells.some(c=>c.owner==='p'&&[c.b1,c.b2].some(b=>b&&SCIENCE_CHAIN.indexOf(b)>=reqIdx));
+  if(!has){
+    S.eraI--;
+    toast('📉 '+(B[req]?.name||req)+' lost! Regressed to Era '+(S.eraI+1)+' '+ERAS[S.eraI].icon);
+  }
+}
+
+function checkEraReady(){
+  if(S.eraI>=ERAS.length-1||G.pathPending)return;
+  if(eraSciMet()){advanceEra();}
+}
+
+// ═══════════════════════════════════════
+// ENERGY
+// ═══════════════════════════════════════
+function energyStock(){return S.wod+(S.oil*1.5)+(S.nuc*3);}
+function energyRate(){return S.wodR+(S.oilR*1.5)+(S.nucR*3);}
+function energyConsume(){return Math.max(1,Math.floor(S.pop/2000));}
+function energyNet(){return Math.floor(energyRate()-energyConsume());}
+
+// ═══════════════════════════════════════
+// FOOD
+// ═══════════════════════════════════════
+function foodNet(){
+  const rate=S.cerR*1.5+S.meaR*2.0+S.fisR*2.5;
+  const consume=Math.max(1,Math.floor(S.pop/50));
+  return Math.floor(rate-consume);
+}
+
+// ═══════════════════════════════════════
+// POPULATION GROWTH
+// ═══════════════════════════════════════
+function growPop(){
+  try{
+  const foodRate=S.cerR*1.5+S.meaR*2.0+S.fisR*2.5;
+  const foodConsume=Math.max(1,Math.floor(S.pop/50));
+  const fn=foodRate-foodConsume;
+  const totalFood=S.cer+S.mea+S.fis;
+  const eStock=energyStock();
+
+  if(S.cap>0&&totalFood>0&&eStock>0&&S.pop<S.cap){
+    const surplusRatio=Math.min(4,Math.max(0,fn/Math.max(1,foodConsume)));
+    // Overcrowding: growth slows as pop approaches cap
+    const crowding=S.pop/S.cap;
+    const crowdPenalty=crowding>0.8?Math.max(0,1-(crowding-0.8)*5):1;
+    const growthRate=(0.15+surplusRatio*0.1625)*crowdPenalty;
+    const medicineGrowth=0; // medicine removed
+    S.pop=Math.min(S.cap,S.pop+Math.max(1,Math.floor(S.pop*growthRate)+medicineGrowth));
+  }
+
+  // Overcrowding at cap → shrink
+  if(S.cap>0&&S.pop>=S.cap){
+    const loss=Math.floor(S.pop*0.05);
+    S.pop=Math.max(1,S.pop-loss);
+    toast('🏠 Overcrowding! −5% pop — upgrade settlements!');
+  }
+
+  // Famine
+  const noFood=totalFood<=0&&fn<0;
+  if(noFood&&S.pop>0){
+    S.pop=Math.max(1,S.pop-Math.floor(S.pop*0.30));
+    toast('☠️ Famine! −30% pop');
+  } else if(eStock<=0&&S.pop>0){
+    toast('⚡ No energy — buildings idle!');
+  }
+
+  // AI growth
+  let aiFoodRate=0;
+  const fmAI=ERAS[S.eraI].foodMult;
+  cells.filter(c=>c.owner==='a').forEach(c=>{
+    const r=hexRates(c);
+    let cerFlat=0,meaFlat=0,fisFlat=0;
+    [c.b1,c.b2].forEach(bid=>{
+      const b=B[bid];if(!b)return;
+      if(b.eff.cerR)cerFlat+=b.eff.cerR*fmAI;
+      if(b.eff.meaR)meaFlat+=b.eff.meaR*fmAI;
+      if(b.eff.fisR)fisFlat+=b.eff.fisR*fmAI;
+    });
+    aiFoodRate+=cerFlat*1.5+meaFlat*2.0+fisFlat*2.5;
+  });
+  const aiFoodConsume=Math.max(1,Math.floor(AI_S.pop/50));
+  const aiTotalFood=aiFoodRate;
+  if(AI_S.cap>AI_S.pop&&aiTotalFood>0){
+    const aiSurplus=Math.min(4,Math.max(0,(aiFoodRate-aiFoodConsume)/Math.max(1,aiFoodConsume)));
+    const aiGrowth=(0.15+aiSurplus*0.1625);
+    AI_S.pop=Math.min(AI_S.cap,AI_S.pop+Math.max(1,Math.floor(AI_S.pop*aiGrowth)));
+  }
+  }catch(e){console.error('growPop error:',e);toast('💥 growPop: '+e.message);}
+}
+
+// ═══════════════════════════════════════
+// SPECIES
+// ═══════════════════════════════════════
+const SPECIES=[
+  {n:'Humans',    f:'🧑',c:'#4a9eff'},
+  {n:'Elves',     f:'🧝',c:'#4aff9e'},
+  {n:'Orcs',      f:'👹',c:'#ff6a4a'},
+  {n:'Dwarves',   f:'⛏️',c:'#ffaa4a'},
+  {n:'Robots',    f:'🤖',c:'#aa9eff'},
+];
+function pickSpecies(){
+  const a=SPECIES.slice();
+  const i=Math.floor(Math.random()*a.length);PL.n=a[i].n;PL.f=a[i].f;PL.c=a[i].c;a.splice(i,1);
+  const j=Math.floor(Math.random()*a.length);AI.n=a[j].n;AI.f=a[j].f;AI.c=a[j].c;
+}
+
+// ═══════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════
+function fmtPop(n){if(n>=1000000)return(n/1000000).toFixed(2)+'M';if(n>=1000)return(n/1000).toFixed(1)+'K';return''+n;}
+function fmtPopRound(n){if(n>=1000000)return Math.round(n/1000000)+'M';return Math.round(n/1000)+'K';}
+function fmtCost(b){
+  return Object.entries(b.cost).map(([k,v])=>{
+    if(k==='energy')return v+'⚡';
+    if(k==='food')return v+'🍽️';
+    return v+(k==='wod'?'🪵':k==='oil'?'🛢️':k==='nuc'?'☢️':k==='cer'?'🌾':k==='mea'?'🥩':'🍌');
+  }).join('+');
+}
+function energyTotal(){return S.wod+S.oil+S.nuc;}
+function foodTotal(){return S.cer+S.mea+S.fis;}
+
+function canAffordB(b){
+  return Object.entries(b.cost).every(([k,v])=>{
+    if(k==='energy')return energyTotal()>=v;
+    if(k==='food')return foodTotal()>=v;
+    return S[k]>=v;
+  });
+}
+
+function payB(b){
+  Object.entries(b.cost).forEach(([k,v])=>{
+    if(k==='energy'){
+      // Pay from wood first, then oil, then nuc
+      let rem=v;
+      const wPay=Math.min(S.wod,rem);S.wod-=wPay;rem-=wPay;
+      const oPay=Math.min(S.oil,rem);S.oil-=oPay;rem-=oPay;
+      S.nuc=Math.max(0,S.nuc-rem);
+    } else if(k==='food'){
+      // Pay from cer first, then mea, then fis
+      let rem=v;
+      const cPay=Math.min(S.cer,rem);S.cer-=cPay;rem-=cPay;
+      const mPay=Math.min(S.mea,rem);S.mea-=mPay;rem-=mPay;
+      S.fis=Math.max(0,S.fis-rem);
+    } else {
+      S[k]=Math.max(0,S[k]-v);
+    }
+  });
+}
+function refundB(b){Object.entries(b.cost).forEach(([k,v])=>{S[k]+= Math.ceil(v/2);});}
+
+let _toastTimer=null;
+function toast(msg){
+  const el=document.getElementById('toast');
+  el.textContent=msg;el.classList.add('on');
+  clearTimeout(_toastTimer);
+  _toastTimer=setTimeout(()=>el.classList.remove('on'),2200);
+}
+
+function showBattleResult(msg,color){
+  const ov=document.getElementById('battle-overlay');
+  const bm=document.getElementById('battle-msg');
+  const isWin=color==='#2ecc71';
+  const isNuke=msg.includes('☢️');
+  const bigIcon=isNuke?'☢️':msg.includes('✈️')?'✈️':isWin?'⚔️':'💀';
+  bm.innerHTML=`<div style="font-size:52px;margin-bottom:6px;">${bigIcon}</div><div>${msg}</div>`;
+  bm.style.background=isWin?'rgba(5,30,15,0.97)':isNuke?'rgba(30,20,5,0.97)':'rgba(30,5,5,0.97)';
+  bm.style.borderColor=color;
+  bm.style.color=color;
+  ov.style.background=isWin?'rgba(0,30,10,0.45)':isNuke?'rgba(30,20,0,0.45)':'rgba(30,0,0,0.45)';
+  ov.classList.add('on');
+  setTimeout(()=>ov.classList.remove('on'),2000);
+}
+
+function countSettlements(owner){
+  return cells.filter(c=>c.owner===owner&&ERA_SETTLE.some(s=>c.b1===s||c.b2===s)).length;
+}
+
+// ═══════════════════════════════════════
+// CANVAS / RENDER
+// ═══════════════════════════════════════
+const cv=document.getElementById('c');
+const ctx=cv.getContext('2d');
+
+function hs(){const w=cv.width,h=cv.height;return Math.min(w/(COLS*Math.sqrt(3)+0.5),h/(ROWS*1.5+0.5))*0.92;}
+function offX(){return(cv.width-(COLS*Math.sqrt(3)+0.5)*hs())/2+hs()*Math.sqrt(3)/2;}
+function offY(){return(cv.height-(ROWS*1.5+0.5)*hs())/2+hs();}
+
+function hXY(col,row){
+  const h=hs(),ox=offX(),oy=offY();
+  return{x:h*Math.sqrt(3)*col+(row%2?h*Math.sqrt(3)/2:0)+ox,y:h*1.5*row+oy,r:h};
+}
+
+function hp(px,py,r){
+  ctx.beginPath();
+  for(let i=0;i<6;i++){const a=Math.PI/3*i+Math.PI/6;i===0?ctx.moveTo(px+r*Math.cos(a),py+r*Math.sin(a)):ctx.lineTo(px+r*Math.cos(a),py+r*Math.sin(a));}
+  ctx.closePath();
+}
+
+function resize(){
+  const wrap=document.getElementById('map-wrap');
+  cv.width=wrap.clientWidth;cv.height=wrap.clientHeight;
+  render();
+}
+
+// Hex flash - global scope
+let flashHex=null,flashLife=0,flashColor='#fff';
+function startFlash(c,color){flashHex=c;flashLife=1.0;flashColor=color;animateParticles();}
+
+function render(){
+  ctx.clearRect(0,0,cv.width,cv.height);
+  cells.forEach(c=>{
+    const{x,y,r}=hXY(c.col,c.row);
+    const tc=T[c.t]||T.cer;
+    // Fill
+    ctx.fillStyle=tc.bg;
+    hp(x,y,r-1);ctx.fill();
+    // Flash overlay
+    if(flashHex===c&&flashLife>0){
+      ctx.save();ctx.globalAlpha=flashLife*0.8;ctx.fillStyle=flashColor;hp(x,y,r-1);ctx.fill();ctx.restore();
+    }
+    // Border
+    ctx.strokeStyle=c.owner==='p'?PL.c:c.owner==='a'?AI.c:tc.brd;
+    ctx.lineWidth=c.owner==='p'?4:c.owner==='a'?3:1;
+    hp(x,y,r-1);ctx.stroke();
+    // Extra glow for player hexes
+    if(c.owner==='p'){
+      ctx.strokeStyle='rgba(74,158,255,0.3)';
+      ctx.lineWidth=8;
+      hp(x,y,r-1);ctx.stroke();
+    }
+    // Dome shield glow
+    if(isUnderDome(c)){
+      ctx.save();ctx.globalAlpha=0.2;ctx.strokeStyle='#aa44ff';ctx.lineWidth=4;
+      hp(x,y,r-1);ctx.stroke();ctx.globalAlpha=1;ctx.restore();
+    }
+    // Selected
+    if(c===selCell){ctx.strokeStyle='#fff';ctx.lineWidth=2;hp(x,y,r-2);ctx.stroke();}
+    // Terrain icon
+    drawTerrain(c,x,y,r);
+    // Building icons
+    drawBuildings(c,x,y,r);
+  });
+  // Decay flash
+  if(flashLife>0){flashLife=Math.max(0,flashLife-0.06);}
+}
+
+function drawTerrain(c,x,y,r){
+  const ty=y;
+  if(c.t==='sea'){
+    ctx.fillStyle='rgba(255,255,255,0.08)';
+    ctx.beginPath();ctx.arc(x,ty,r*.3,0,Math.PI*2);ctx.fill();
+  } else if(c.t==='cst'){
+    ctx.fillStyle='#2aa';
+    ctx.font=Math.max(12,r*.75)+'px serif';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText('⚓',x,ty);
+  } else if(c.t==='jgl'){
+    ctx.font=Math.max(10,r*.75)+'px serif';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText('🍌',x,ty);
+  } else if(c.t==='fuel'){
+    ctx.fillStyle='#ffe066';
+    ctx.font=Math.max(10,r*.75)+'px serif';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText('🛢️',x,ty);
+  } else if(c.t==='nuclear'){
+    ctx.fillStyle='#88ff88';
+    ctx.font=Math.max(10,r*.75)+'px serif';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText('☢',x,ty);
+  } else if(c.t==='woods'){
+    ctx.fillStyle='#55ee88';
+    ctx.font=Math.max(10,r*.75)+'px serif';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText('🌲',x,ty);
+  } else if(c.t==='cer'){
+    ctx.fillStyle='#ffe066';
+    ctx.font=Math.max(10,r*.75)+'px serif';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText('🌾',x,ty);
+  } else if(c.t==='ani'){
+    ctx.fillStyle='#ffbb66';
+    ctx.font=Math.max(10,r*.75)+'px serif';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText('🐄',x,ty);
+  }
+}
+
+function drawBuildings(c,x,y,r){
+  // Hide buildings on player hexes if espionage active (unless selected)
+  if(S.bonus.espionage&&c.owner==='p'&&c!==selCell){
+    if(c.b1||c.b2){
+      ctx.font=Math.max(8,r*.3)+'px serif';
+      ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.globalAlpha=0.4;
+      ctx.fillText('🕵️',x,y+r*.35);
+      ctx.globalAlpha=1;
+    }
+    return;
+  }
+  const bids=[c.b1,c.b2].filter(Boolean);
+  if(!bids.length)return;
+  ctx.font=Math.max(10,r*.45)+'px serif';
+  ctx.textAlign='center';ctx.textBaseline='middle';
+  if(bids.length===1){
+    ctx.fillStyle='#fff';
+    ctx.fillText(B[bids[0]]?.icon||'?',x,y+r*.35);
+  } else {
+    ctx.fillText(B[bids[0]]?.icon||'?',x-r*.25,y+r*.35);
+    ctx.fillText(B[bids[1]]?.icon||'?',x+r*.25,y+r*.35);
+  }
+}
+
+// ═══════════════════════════════════════
+// PARTICLES
+// ═══════════════════════════════════════
+const particles=[];
+function spawnParticles(x,y,emoji,count=8){
+  for(let i=0;i<count;i++){
+    const angle=Math.random()*Math.PI*2;
+    const speed=2.5+Math.random()*4;
+    particles.push({
+      x,y,
+      vx:Math.cos(angle)*speed,
+      vy:Math.sin(angle)*speed-3,
+      emoji,
+      life:1.0,
+      decay:0.018+Math.random()*0.012,
+      size:22+Math.random()*18,
+    });
+  }
+  animateParticles();
+}
+
+let _animFrame=null;
+function animateParticles(){
+  if(_animFrame)return;
+  function step(){
+    try{
+    render();
+    ctx.globalAlpha=1;
+    ctx.textAlign='center';ctx.textBaseline='middle';
+    particles.forEach(p=>{
+      ctx.globalAlpha=Math.max(0,p.life);
+      ctx.font=p.size+'px serif';
+      ctx.fillText(p.emoji,p.x,p.y);
+      p.x+=p.vx;p.y+=p.vy;p.vy+=0.15;p.life-=p.decay;
+    });
+    ctx.globalAlpha=1;
+    for(let i=particles.length-1;i>=0;i--){if(particles[i].life<=0)particles.splice(i,1);}
+    if(particles.length>0||flashLife>0){_animFrame=requestAnimationFrame(step);}
+    else{_animFrame=null;render();}
+    }catch(e){_animFrame=null;console.error('anim error:',e);toast('anim: '+e.message);}
+  }
+  _animFrame=requestAnimationFrame(step);
+}
+
+function particlesForBuilding(id,x,y){
+  const emojiMap={
+    camp:'🛖',village:'🏘️',city:'🏙️',indcity:'🏭',metro:'🌆',
+    farm:'🌾',granary:'🌾',plant:'🌾',ifarm:'🌾',sfarm:'🌾',
+    ranch:'🥩',butchery:'🥩',slaught:'🥩',iranch:'🥩',sranch:'🥩',
+    gatherer:'🍌',
+    logcamp:'🪵',sawmill:'🪵',timber:'🪵',wfactory:'🪵',sfactory:'🪵',
+    oilrig:'🛢️',refinery:'🛢️',mrefine:'🛢️',
+    nuclear:'☢️',fusion:'⚛️',
+    scrip:'📖',library:'📚',academy:'🏫',lab:'🔬',resctr:'🖥️',
+    barracks:'🪖',airport:'✈️',tanks:'🪖',
+  };
+  const emoji=emojiMap[id]||B[id]?.icon||'✨';
+  spawnParticles(x,y,emoji,8);
+}
+function nearCell(mx,my){
+  const h=hs();
+  let best=null,bd=Infinity;
+  cells.forEach(c=>{
+    const p=hXY(c.col,c.row);
+    const d=Math.hypot(mx-p.x,my-p.y);
+    const radius=c.owner==='p'?h*1.3:h;
+    if(d<radius&&d<bd){bd=d;best=c;}
+  });
+  return best;
+}
+
+function hideHexPopup(){
+  document.getElementById('hex-popup').style.display='none';
+  selCell=null;render();
+}
+
+function updateCtxActions(c){
+  const popup=document.getElementById('hex-popup');
+  const btns=document.getElementById('hex-popup-btns');
+  const nameEl=document.getElementById('hex-popup-name');
+  btns.innerHTML='';
+  if(!c){popup.style.display='none';return;}
+
+  const{x,y,r}=hXY(c.col,c.row);
+  const cvRect=cv.getBoundingClientRect();
+  const scaleX=cvRect.width/cv.width,scaleY=cvRect.height/cv.height;
+  let px=(x+r*0.5)*scaleX,py=(y-r*1.2)*scaleY;
+  px=Math.min(px,cvRect.width-145);px=Math.max(px,2);
+  py=Math.max(py,2);
+  popup.style.left=px+'px';popup.style.top=py+'px';
+
+  const icons=[c.b1,c.b2].filter(Boolean).map(bid=>B[bid]?.icon||'').join('');
+  nameEl.textContent=(T[c.t]?.label||c.t)+(icons?' '+icons:'')+(c.owner==='p'?' ✅':c.owner==='a'?' ⚔️':'');
+
+  const isOwn=c.owner==='p';
+  const isEnemy=c.owner==='a';
+  const isUnclaimed=!c.owner;
+  const isLandable=c.t!=='sea';
+  const adjToPlayer=isLandAdjacent(c);
+  const acted=S.actedThisTurn;
+
+  const addBtn=(icon,label,action,disabled=false,color='#eee')=>{
+    const b=document.createElement('button');
+    b.style.cssText=`display:flex;align-items:center;gap:5px;background:${disabled?'rgba(255,255,255,0.02)':'rgba(255,255,255,0.07)'};border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:5px 8px;color:${disabled?'#444':color};font-size:10px;cursor:${disabled?'default':'pointer'};width:100%;text-align:left;`;
+    b.disabled=disabled;
+    b.innerHTML=`<span style="font-size:12px">${icon}</span>${label}`;
+    if(!disabled)b.onclick=()=>{hideHexPopup();action();};
+    btns.appendChild(b);
+  };
+
+  const addSep=(label)=>{
+    const d=document.createElement('div');
+    d.style.cssText='font-size:8px;color:#6a8aaa;padding:3px 2px 1px;border-top:1px solid rgba(255,255,255,0.06);margin-top:2px;';
+    d.textContent=label;btns.appendChild(d);
+  };
+
+  // ── BUILD (owned OR adjacent unclaimed) ──
+  if(isLandable&&(isOwn||(isUnclaimed&&adjToPlayer))){
+    addSep('🏗️ Build');
+    const isFuel=c.t==='fuel';
+    const isNuclear=c.t==='nuclear';
+    const hasSettle=ERA_SETTLE.some(s=>c.b1===s||c.b2===s);
+
+    const avail=Object.entries(B).filter(([id,b])=>{
+      if(!S.unlockedBuildings.has(id))return false;
+      if(b.era>S.eraI)return false;
+      // Settlements/science: only current era version
+      if((b.type==='settle'||b.type==='science')&&b.era<S.eraI)return false;
+      if(b.type==='fort')return false;
+      if(b.type==='army'&&!S.bonus.airStrike&&id==='airport')return false;
+      if(b.type==='maritime')return false;
+      if(b.type==='settle'){
+        if(hasSettle)return false;
+        return true;
+      }
+      // Upgrade: only show if hex has the required settlement
+      if(b.type==='upgrade'){
+        if(!b.upgrades)return false;
+        if(c.b1!==b.upgrades)return false;
+        return true;
+      }
+      // Science upgrade: show if hex has the upgradeable science building
+      if(b.type==='sciupgrade'){
+        if(!b.upgrades)return false;
+        if(c.b2!==b.upgrades)return false;
+        return true;
+      }
+      // On owned hex: need settlement in b1, and b2 must be free
+      if(isOwn&&!hasSettle)return false;
+      if(isOwn&&c.b2)return false;
+      // On unclaimed hex: b2 slot logic doesn't apply yet, just check terrain
+      if(b.terrain==='cer'&&c.t!=='cer')return false;
+      if(b.terrain==='ani'&&c.t!=='ani')return false;
+      if(b.terrain==='jgl'&&c.t!=='jgl')return false;
+      if(b.terrain==='woods'&&c.t!=='woods')return false;
+      if(b.terrain==='fuel'&&!isFuel)return false;
+      if(b.terrain==='nuclear'&&!isNuclear)return false;
+      if(b.terrain==='cst'&&c.t!=='cst')return false;
+      if(b.terrain==='land'&&!['cer','ani','woods','fuel','nuclear','jgl'].includes(c.t))return false;
+      if(id==='oilrig'&&!isFuel)return false;
+      if(['ranch','butchery','slaught','iranch','sranch'].includes(id)&&!S.bonus.pastoralism)return false;
+      if(['oilrig','refinery','mrefine'].includes(id)&&!S.unlockedBuildings.has(id))return false;
+      if(id==='nuclear'&&!isNuclear)return false;
+      if(c.b1===id||c.b2===id)return false;
+      return true;
+    });
+
+    avail.forEach(([id,b])=>{
+      const cost=fmtCost(b);
+      const afford=canAffordB(b);
+      const fm=ERAS[S.eraI].foodMult;
+      const era1=S.eraI===0;
+      const effects=[];
+      if(b.cap)effects.push('+'+fmtPop(b.cap)+' cap');
+      if(b.eff.cerR)effects.push('🌾 +'+Math.floor(b.eff.cerR*fm)+'/t');
+      if(b.eff.meaR)effects.push('🥩 +'+Math.floor(b.eff.meaR*fm)+'/t');
+      if(b.eff.fisR)effects.push('🍌 +'+Math.floor(b.eff.fisR*fm)+'/t');
+      if(b.eff.wodR)effects.push('+'+b.eff.wodR+'🪵/t');
+      if(b.eff.oilMult)effects.push('🛢️ ×'+b.eff.oilMult);
+      if(b.eff.nucMult)effects.push('☢️ ×'+b.eff.nucMult);
+      if(b.eff.sciR)effects.push('+'+b.eff.sciR+'🔬/t');
+      if(b.eff.defense)effects.push('+'+Math.round(b.eff.defense*100)+'% def');
+      const effectStr=effects.length?' → '+effects.join(' · '):'';
+      addBtn(b.icon,`${b.name} (${cost})${effectStr}`,()=>{selCell=c;doBuild(id,b,c);},acted||!afford);
+    });
+
+    // Demolish
+    [c.b1,c.b2].filter(Boolean).forEach(bid=>{
+      const b=B[bid];if(!b)return;
+      const refund=Object.entries(b.cost).map(([k,v])=>Math.ceil(v/2)+(k==='wod'?'🪵':k==='oil'?'🛢️':k==='nuc'?'☢️':k==='cer'?'🌾':'🥩')).join('+');
+      addBtn('🔥',`Demolish ${b.name} (+${refund})`,()=>{
+        if(bid===c.b1)c.b1=null;else c.b2=null;
+        Object.entries(b.cost).forEach(([k,v])=>{S[k]+=Math.ceil(v/2);});
+        S.actedThisTurn=true;
+        recalc();toast('🔥 Demolished '+b.name);updateUI();render();
+        const gid=G.id;setTimeout(()=>{try{if(G.id===gid)endTurn();}catch(e){toast("ET: "+e.message);}},600);
+      },acted,'#e74c3c');
+    });
+  }
+
+  // ── ENEMY ──
+  if(isEnemy){
+    const blds=[c.b1,c.b2].filter(Boolean).map(bid=>B[bid]).filter(Boolean);
+    if(blds.length){
+      const bDiv=document.createElement('div');
+      bDiv.style.cssText='background:rgba(224,80,48,0.1);border:1px solid rgba(224,80,48,0.3);border-radius:6px;padding:5px 7px;margin-bottom:4px;';
+      bDiv.innerHTML='<div style="font-size:8px;color:#e05030;font-weight:700;margin-bottom:3px;">🏠 Enemy Buildings</div>'+
+        blds.map(b=>`<div style="font-size:9px;color:#eee;">${b.icon} ${b.name}</div>`).join('');
+      btns.appendChild(bDiv);
+    }
+    // Battle preview
+    const winPct=S.bonus.nuclearArsenal?95:Math.round(calcWinChance()*100);
+    const airPct=S.bonus.nuclearArsenal?95:Math.round(calcWinChance(2)*100);
+    const attackCost=S.eraI<=1?'20🪵':S.eraI<=3?'10🛢️':'3☢️';
+    const airCost=S.eraI<=2?'20🛢️':'15🛢️';
+    addSep('⚔️ Attack');
+    const adjP=nbrs(c).some(n=>n.owner==='p');
+    const canLand=adjP&&(S.eraI<=1?S.wod>=20:S.eraI<=3?S.oil>=10:S.nuc>=3);
+    const hasHarbour=cells.some(c2=>c2.owner==='p'&&(c2.b1==='harbour'||c2.b2==='harbour'||c2.b1==='fleet'||c2.b2==='fleet'));
+    const navalReachable=S.bonus.navalBombard&&hasHarbour&&nbrs(c).some(n=>n.t==='sea'||n.t==='cst');
+    addBtn('⚔️',`Infantry Attack (${attackCost}) · ${winPct}% · keeps buildings`,()=>{selCell=c;doAction('landattack');},acted||!adjP,'#ff9944');
+    if(navalReachable&&!adjP){
+      addBtn('⚓',`Naval Attack (${attackCost}) · ${winPct}% · keeps buildings`,()=>{selCell=c;doAction('navalattack');},acted,'#2299cc');
+    }
+    if(S.bonus.airStrike){
+      addBtn('✈️',`Air Strike (${airCost}) · ${airPct}% · destroys buildings`,()=>{selCell=c;doAction('airstrike');},acted||S.oil<(S.eraI<=2?20:15),'#ff9944');
+    }
+    if(S.bonus.nuclearArsenal&&S.nuc>=5){
+      addBtn('☢️','Nuclear Strike (5☢️) · 95% win',()=>{selCell=c;doAction('nuclearstrike');},acted,'#ff4444');
+    }
+    if(S.bonus.cyberAttack){
+      const enemySci=[c.b1,c.b2].find(b=>b&&SCIENCE_CHAIN.includes(b));
+      if(enemySci){
+        const used=S.cyberCooldown===-1;
+        const label=used?'💻 Cyber (used — one time only)':'💻 Cyber Attack — destroy '+B[enemySci]?.name;
+        addBtn('💻',label,()=>{selCell=c;doAction('cyberattack');},acted||used,'#aa44ff');
+      }
+    }
+  }
+
+  popup.style.display='block';
+}
+
+// ═══════════════════════════════════════
+// ADJACENCY
+// ═══════════════════════════════════════
+function isLandAdjacent(c){
+  if(c.t==='sea')return false;
+  if(S.bonus.coastalExpand&&c.t==='cst')return true;
+  if(nbrs(c).some(n=>n.owner==='p'&&n.t!=='sea'))return true;
+  // Pathfinding: can reach hexes 2 steps away
+  if(S.bonus.pathfinding){
+    return nbrs(c).some(n=>n.t!=='sea'&&nbrs(n).some(n2=>n2.owner==='p'&&n2.t!=='sea'));
+  }
+  return false;
+}
+
+function isAdjacentToSea(c){
+  return nbrs(c).some(n=>n.t==='sea');
+}
+
+function adjEnemy(){
+  for(const c of cells.filter(c=>c.owner==='p')){
+    const nb=nbrs(c).find(n=>n.owner==='a');
+    if(nb)return nb;
+  }
+  return null;
+}
+
+// ═══════════════════════════════════════
+// BUILD
+// ═══════════════════════════════════════
+function doBuild(id,b,c){
+  if(!canAffordB(b)){toast('Not enough resources!');return;}
+  // Auto-claim if unclaimed
+  if(!c.owner){
+    if(S.wod<2){toast('Need 2🪵 to expand!');return;}
+    S.wod-=2;
+    c.owner='p';
+  }
+  payB(b);
+  // Place in correct slot
+  if(b.type==='settle'){c.b1=id;}
+  else if(b.type==='upgrade'){
+    const targetId=id.replace('up','');
+    c.b1=targetId;
+  }
+  else if(b.type==='sciupgrade'){
+    const targetId=id.replace('up','');
+    c.b2=targetId;
+  }
+  else if(b.type==='defense'){
+    c.b2=id;
+    S.domeAnchor={col:c.col,row:c.row};
+    toast('🔮 Dome Shield active — protecting 7 hexes!');
+  }
+  else{c.b2=id;}
+  S.actedThisTurn=true;
+  // Particle effect
+  const{x,y}=hXY(c.col,c.row);
+  particlesForBuilding(id,x,y);
+  recalc();
+  toast(b.icon+' '+b.name+' built!');
+  updateUI();render();
+  const gid=G.id;setTimeout(()=>{try{if(G.id===gid)endTurn();}catch(e){toast("ET: "+e.message);}},600);
+}
+
+// ═══════════════════════════════════════
+// ACTIONS
+// ═══════════════════════════════════════
+function doAction(type){
+  if(G.over||G.pathPending||S.actedThisTurn)return;
+  const c=selCell;
+
+  if(type==='claim'){
+    if(!c)return;
+    if(!isLandAdjacent(c)){toast('Not reachable!');return;}
+    S.wod-=2;
+    c.owner='p';
+    const{x,y}=hXY(c.col,c.row);
+    spawnParticles(x,y,'🚩',8);
+    recalc();updateUI();render();
+    selCell=c;
+    updateCtxActions(c);
+    toast('🚩 Hex claimed!');
+    return;
+  }
+
+  if(type==='landattack'){
+    if(!c||c.owner!=='a'){toast('Select enemy hex!');return;}
+    if(!nbrs(c).some(n=>n.owner==='p')){toast('Not adjacent!');return;}
+    // Cost scales with era
+    const cost=S.eraI<=1?{wod:20}:S.eraI<=3?{oil:10}:{nuc:3};
+    const costStr=cost.wod?cost.wod+'🪵':cost.oil?cost.oil+'🛢️':cost.nuc+'☢️';
+    const res=cost.wod?'wod':cost.oil?'oil':'nuc';
+    if(S[res]<cost[res]){toast('Need '+costStr+' to attack!');return;}
+    S[res]-=cost[res];
+    const winChance=calcWinChance();
+    const win=S.bonus.nuclearArsenal||Math.random()<winChance;
+    if(win){
+      applyCapture(c);
+      const{x,y}=hXY(c.col,c.row);
+      spawnParticles(x,y,'⚔️',8);
+      startFlash(c,'#2ecc71');
+      showBattleResult('⚔️ Captured! '+Math.round(winChance*100)+'% odds','#2ecc71');
+      recalc();updateUI();render();
+      if(AI_S.pop<=0){showWin(true);return;}
+    } else {
+      const loss=Math.floor(S.pop*0.10);
+      S.pop=Math.max(1,S.pop-loss);
+      const{x,y}=hXY(c.col,c.row);
+      spawnParticles(x,y,'💀',6);
+      startFlash(c,'#e74c3c');
+      showBattleResult('⚔️ Repelled! −'+fmtPop(loss)+' pop','#e74c3c');
+      recalc();updateUI();render();
+    }
+    S.actedThisTurn=true;
+    const gid=G.id;setTimeout(()=>{try{if(G.id===gid)endTurn();}catch(e){toast("ET: "+e.message);}},600);
+    return;
+  }
+
+  if(type==='navalattack'){
+    if(!c||c.owner!=='a'){toast('Select enemy hex!');return;}
+    // Must be adjacent to sea/coastal
+    if(!nbrs(c).some(n=>n.t==='sea'||n.t==='cst')){toast('Target must be adjacent to sea!');return;}
+    // Must have harbour
+    const hasHarbour=cells.some(c2=>c2.owner==='p'&&(c2.b1==='harbour'||c2.b2==='harbour'||c2.b1==='fleet'||c2.b2==='fleet'));
+    if(!hasHarbour){toast('Need a Harbour!');return;}
+    const cost=S.eraI<=1?{wod:20}:S.eraI<=3?{oil:10}:{nuc:3};
+    const res=cost.wod?'wod':cost.oil?'oil':'nuc';
+    const costStr=cost.wod?cost.wod+'🪵':cost.oil?cost.oil+'🛢️':cost.nuc+'☢️';
+    if(S[res]<cost[res]){toast('Need '+costStr+'!');return;}
+    S[res]-=cost[res];
+    const winChance=calcWinChance();
+    const win=S.bonus.nuclearArsenal||Math.random()<winChance;
+    if(win){
+      applyCapture(c);
+      const{x,y}=hXY(c.col,c.row);
+      spawnParticles(x,y,'⚓',8);spawnParticles(x,y,'⚔️',6);
+      startFlash(c,'#2299cc');
+      showBattleResult('⚓ Naval Landing! Hex captured','#2299cc');
+      recalc();updateUI();render();
+      if(AI_S.pop<=0){showWin(true);return;}
+    } else {
+      const loss=Math.floor(S.pop*0.10);
+      S.pop=Math.max(1,S.pop-loss);
+      const{x,y}=hXY(c.col,c.row);
+      spawnParticles(x,y,'💀',6);
+      startFlash(c,'#e74c3c');
+      showBattleResult('⚓ Naval Attack Failed! −'+fmtPopRound(loss)+' pop','#e74c3c');
+      recalc();updateUI();render();
+    }
+    S.actedThisTurn=true;
+    const gidN=G.id;setTimeout(()=>{try{if(G.id===gidN)endTurn();}catch(e){toast('ET: '+e.message);}},600);
+    return;
+  }
+
+  if(type==='airstrike'){
+    if(!c||c.owner!=='a'){toast('Select enemy hex!');return;}
+    const cost=S.eraI<=2?20:15;
+    if(S.oil<cost){toast('Need '+cost+'🛢️!');return;}
+    S.oil-=cost;
+    const winChance=calcWinChance(3); // ×3 same as infantry
+    const win=S.bonus.nuclearArsenal||Math.random()<winChance;
+    if(win){
+      // Apply pop loss from settlement capture
+      const settleBid=ERA_SETTLE.find(s=>c.b1===s||c.b2===s);
+      if(settleBid&&B[settleBid]&&AI_S.cap>0){
+        const popLost=Math.floor(AI_S.pop*(B[settleBid].cap/AI_S.cap));
+        AI_S.pop=Math.max(1,AI_S.pop-popLost);
+      }
+      // Capture hex but destroy ALL buildings (bombing raid)
+      c.owner='p';c.b1=null;c.b2=null;
+      startFlash(c,'#2ecc71');
+      const{x,y}=hXY(c.col,c.row);
+      spawnParticles(x,y,'✈️',10);spawnParticles(x,y,'💥',6);
+      showBattleResult('✈️ Air Strike! Hex captured — buildings destroyed','#2ecc71');
+      recalc();updateUI();render();
+      if(AI_S.pop<=0){showWin(true);return;}
+    } else {
+      const loss=Math.floor(S.pop*0.10);
+      S.pop=Math.max(1,S.pop-loss);
+      const{x,y}=hXY(c.col,c.row);
+      spawnParticles(x,y,'💀',6);
+      startFlash(c,'#e74c3c');
+      showBattleResult('✈️ Strike Failed! −'+fmtPopRound(loss)+' pop','#e74c3c');
+      recalc();updateUI();render();
+    }
+    S.actedThisTurn=true;
+    const gid2=G.id;setTimeout(()=>{try{if(G.id===gid2)endTurn();}catch(e){toast("ET2: "+e.message);}},600);
+    return;
+  }
+
+  if(type==='nuclearstrike'){
+    if(!c||c.owner!=='a'){toast('Select enemy hex!');return;}
+    if(S.nuc<5){toast('Need 5☢️!');return;}
+    if(isUnderDome(c)){
+      toast('🔮 Dome Shield blocked the nuclear strike! 5☢️ lost.');
+      S.nuc-=5;
+      spawnParticles(...Object.values(hXY(c.col,c.row)).slice(0,2),'🔮',10);
+      startFlash(c,'#aa44ff');
+      S.actedThisTurn=true;
+      recalc();updateUI();render();
+      const gidD=G.id;setTimeout(()=>{try{if(G.id===gidD)endTurn();}catch(e){toast('ET: '+e.message);}},600);
+      return;
+    }
+    S.nuc-=5;
+    c.owner='p';c.b1=null;c.b2=null;
+    nbrs(c).filter(n=>n.owner==='a').slice(0,2).forEach(n=>{n.b1=null;n.b2=null;});
+    AI_S.pop=Math.max(1,Math.floor(AI_S.pop*0.5));
+    const{x,y}=hXY(c.col,c.row);
+    spawnParticles(x,y,'☢️',12);
+    startFlash(c,'#ffaa00');
+    nbrs(c).forEach(n=>{const p=hXY(n.col,n.row);spawnParticles(p.x,p.y,'💥',6);});
+    showBattleResult('☢️ Nuclear Strike! Enemy −50% pop','#ffaa00');
+    S.actedThisTurn=true;
+    recalc();updateUI();render();
+    const gid3=G.id;setTimeout(()=>{try{if(G.id===gid3)endTurn();}catch(e){toast("ET3: "+e.message);}},600);
+    return;
+  }
+
+  if(type==='cyberattack'){
+    if(!c||c.owner!=='a'){toast('Select enemy hex!');return;}
+    const sciBid=[c.b1,c.b2].find(b=>b&&SCIENCE_CHAIN.includes(b));
+    if(!sciBid){toast('No science building on that hex!');return;}
+    if(S.cyberCooldown===-1){toast('Already used — one time only!');return;}
+    if(isUnderDome(c)){
+      toast('🔮 Dome Shield blocked the cyber attack! One-time use consumed.');
+      S.cyberCooldown=-1;
+      const{x,y}=hXY(c.col,c.row);
+      spawnParticles(x,y,'🔮',10);startFlash(c,'#aa44ff');
+      S.actedThisTurn=true;
+      recalc();updateUI();render();
+      const gidC=G.id;setTimeout(()=>{try{if(G.id===gidC)endTurn();}catch(e){toast('ET: '+e.message);}},600);
+      return;
+    }
+    // Destroy science building
+    if(c.b1===sciBid)c.b1=null;else c.b2=null;
+    // Freeze enemy science for 5 turns
+    AI_S.sciFreeze=G.turn+5;
+    // One time only
+    S.cyberCooldown=-1;
+    const{x,y}=hXY(c.col,c.row);
+    spawnParticles(x,y,'💻',10);
+    startFlash(c,'#aa44ff');
+    showBattleResult('💻 Cyber Attack! '+B[sciBid]?.name+' destroyed! Enemy science frozen 5 turns','#aa44ff');
+    S.actedThisTurn=true;
+    recalc();updateUI();render();
+    const gid=G.id;setTimeout(()=>{try{if(G.id===gid)endTurn();}catch(e){toast('ET: '+e.message);}},600);
+    return;
+  }
+
+  if(type==='market'){
+    showMarket();return;
+  }
+}
+
+function isUnderDome(c){
+  if(!S.domeAnchor)return false;
+  const anchor=cAt(S.domeAnchor.col,S.domeAnchor.row);
+  if(!anchor)return false;
+  return c===anchor||nbrs(anchor).includes(c);
+}
+
+function calcWinChance(airMult=1){
+  if(S.bonus.nuclearArsenal)return 0.95;
+  const techBonus=(S.bonus.tankBonus?3:1)*airMult;
+  const myStr=S.pop*ERAS[S.eraI].weapon*techBonus;
+  const aiStr=AI_S.pop*ERAS[AI_S.eraI||0].weapon;
+  return Math.min(0.95,Math.max(0.05,myStr/(myStr+aiStr)));
+}
+
+function applyCapture(tgt){
+  const settleBid=ERA_SETTLE.find(s=>tgt.b1===s||tgt.b2===s);
+  if(settleBid&&B[settleBid]&&AI_S.cap>0){
+    const capLost=B[settleBid].cap;
+    const popLost=Math.floor(AI_S.pop*(capLost/AI_S.cap));
+    AI_S.pop=Math.max(1,AI_S.pop-popLost);
+  }
+  tgt.owner='p';
+  eraSciRegress();
+}
+
+function doSkip(){
+  if(G.over||G.pathPending)return;
+  endTurn();
+}
+
+// ═══════════════════════════════════════
+// MARKET
+// ═══════════════════════════════════════
+const MARKET_RES=[
+  {id:'wod',icon:'🪵',label:'Wood'},
+  {id:'oil',icon:'🛢️',label:'Oil'},
+  {id:'nuc',icon:'☢️',label:'Uranium'},
+  {id:'cer',icon:'🌾',label:'Cereal'},
+  {id:'mea',icon:'🥩',label:'Meat'},
+  {id:'fis',icon:'🍌',label:'Jungle'},
+];
+
+let _mktFrom=null,_mktTo=null;
+
+function showMarket(){
+  _mktFrom=null;_mktTo=null;
+  renderMarket();
+  document.getElementById('market-wrap').classList.add('on');
+}
+
+function renderMarket(){
+  const ratio=S.bonus.marketBonus?2:10;
+  const maxReceive=S.bonus.marketBonus?Infinity:100;
+  const cont=document.getElementById('market-content');
+  cont.innerHTML='';
+
+  if(!_mktFrom){
+    const title=document.createElement('p');
+    title.textContent=S.bonus.marketBonus?'Step 1: Give (ratio 2:1)':'Step 1: Give (ratio 10:1 · max 100 received)';
+    cont.appendChild(title);
+    const grid=document.createElement('div');grid.className='market-grid';
+    MARKET_RES.forEach(r=>{
+      const v=Math.floor(S[r.id]);
+      const enough=v>=ratio;
+      const cell=document.createElement('div');
+      cell.className='m-cell'+(enough?'':' disabled');
+      cell.innerHTML=`<div class="m-icon">${r.icon}</div><div class="m-val">${v}</div><div class="m-label">${r.label}</div>`;
+      if(enough)cell.onclick=()=>{_mktFrom=r;renderMarket();};
+      grid.appendChild(cell);
+    });
+    cont.appendChild(grid);
+  } else if(!_mktTo){
+    const title=document.createElement('p');
+    title.innerHTML=`Giving: ${_mktFrom.icon} ${_mktFrom.label} (you have ${Math.floor(S[_mktFrom.id])})<br>Step 2: What do you want to RECEIVE?`;
+    cont.appendChild(title);
+    const grid=document.createElement('div');grid.className='market-grid';
+    MARKET_RES.forEach(r=>{
+      if(r.id===_mktFrom.id)return;
+      const cell=document.createElement('div');
+      cell.className='m-cell';
+      cell.innerHTML=`<div class="m-icon">${r.icon}</div><div class="m-val">${Math.floor(S[r.id])}</div><div class="m-label">${r.label}</div>`;
+      cell.onclick=()=>{_mktTo=r;renderMarket();};
+      grid.appendChild(cell);
+    });
+    cont.appendChild(grid);
+    const back=document.createElement('button');
+    back.className='modal-cancel';back.textContent='← Back';
+    back.onclick=()=>{_mktFrom=null;renderMarket();};
+    cont.appendChild(back);
+  } else {
+    const have=Math.floor(S[_mktFrom.id]);
+    const maxTrades=Math.min(Math.floor(have/ratio), Math.floor(maxReceive));
+    const title=document.createElement('p');
+    title.innerHTML=`${_mktFrom.icon}→${_mktTo.icon} at ${ratio}:1${maxReceive<Infinity?' (max '+maxReceive+' received)':''}<br>You have ${have} ${_mktFrom.label}. Max ${maxTrades} trades.`;
+    cont.appendChild(title);
+    const volumes=[1,5,10,20,50].filter(v=>v<=maxTrades);
+    if(maxTrades>0&&!volumes.includes(maxTrades))volumes.push(maxTrades);
+    volumes.forEach(vol=>{
+      const give=vol*ratio,get=vol;
+      const btn=document.createElement('button');
+      btn.className='build-btn';
+      btn.innerHTML=`<span class="b-icon">${_mktFrom.icon}</span><span class="b-info"><div class="b-name">Trade ${give} ${_mktFrom.label} → ${get} ${_mktTo.label}</div></span>`;
+      btn.onclick=()=>{
+        S[_mktFrom.id]=Math.max(0,S[_mktFrom.id]-give);
+        S[_mktTo.id]+=get;
+        S.actedThisTurn=true;
+        recalc();updateUI();
+        document.getElementById('market-wrap').classList.remove('on');
+        toast(`Traded ${give}${_mktFrom.icon} → ${get}${_mktTo.icon}`);
+        const gid=G.id;setTimeout(()=>{try{if(G.id===gid)endTurn();}catch(e){toast("ET: "+e.message);}},600);
+      };
+      cont.appendChild(btn);
+    });
+    const back=document.createElement('button');
+    back.className='modal-cancel';back.textContent='← Back';
+    back.onclick=()=>{_mktTo=null;renderMarket();};
+    cont.appendChild(back);
+  }
+}
+
+// ═══════════════════════════════════════
+// ERA TRANSITION
+// ═══════════════════════════════════════
+function showSpecChoice(){
+  if(!G.pathPending)return;
+  const eraIdx=S.eraI-1;
+  if(eraIdx<0||eraIdx>=ERA_SPECS.length||S.eraI>=ERAS.length){G.pathPending=false;return;}
+  const specs=ERA_SPECS[eraIdx];
+  const era=ERAS[S.eraI]||ERAS[ERAS.length-1];
+  const newSettle=B[ERA_SETTLE[S.eraI]];
+  const sciNames=['Scriptorium','Library','Academy','Laboratory','Research Center'];
+  const autoMsg=(newSettle?newSettle.icon+' '+newSettle.name:'')+(sciNames[S.eraI]?' · 📖 '+sciNames[S.eraI]:'');
+  document.getElementById('spec-sub').textContent='Era '+(S.eraI+1)+' '+era.icon+' · Auto-unlocked: '+autoMsg;
+  const container=document.getElementById('spec-options');container.innerHTML='';
+  const title=document.createElement('div');
+  title.style.cssText='font-size:9px;color:#f0b429;padding:4px 2px 8px;font-weight:700;';
+  title.textContent='Choose ONE specialization:';
+  container.appendChild(title);
+  specs.forEach(spec=>{
+    if(S.specHistory.includes(spec.id))return;
+    const btn=document.createElement('button');
+    btn.className='spec-btn';
+    btn.innerHTML=`<span class="spec-icon">${spec.icon}</span><span class="spec-info"><div class="spec-name">${spec.name}</div><div class="spec-desc">${spec.desc||''}</div></span>`;
+    btn.onclick=()=>applySpec(spec.id);
+    container.appendChild(btn);
+  });
+  document.getElementById('spec-wrap').classList.add('on');
+}
+
+function applySpec(specId){
+  document.getElementById('spec-wrap').classList.remove('on');
+  G.pathPending=false;
+  const spec=ERA_SPECS.flat().find(s=>s.id===specId);
+  if(!spec)return;
+  S.specHistory.push(specId);
+  if(spec.unlocks)S.unlockedBuildings.add(spec.unlocks);
+  if(spec.bonus)Object.assign(S.bonus,spec.bonus);
+  if(S.bonus.domeShield)S.unlockedBuildings.add('domeshield');
+  if(S.bonus.industrialBonus){
+    S.unlockedBuildings.add('oilrig');
+    S.unlockedBuildings.add('refinery');
+    S.unlockedBuildings.add('mrefine');
+  }
+  if(S.bonus.pastoralism){
+    S.unlockedBuildings.add('ranch');
+    S.unlockedBuildings.add('butchery');
+    S.unlockedBuildings.add('slaught');
+    S.unlockedBuildings.add('iranch');
+    S.unlockedBuildings.add('sranch');
+  }
+  if(spec.upgrades){
+    spec.upgrades.forEach(upg=>{
+      const[oldId,newId]=upg.split('→');
+      cells.filter(c=>c.owner==='p').forEach(c=>{
+        if(c.b1===oldId)c.b1=newId;
+        if(c.b2===oldId)c.b2=newId;
+      });
+      S.unlockedBuildings.delete(oldId);
+      S.unlockedBuildings.add(newId);
+    });
+  }
+  // Update bonus badge
+  const bonusRow=document.getElementById('bonus-row');
+  const bonusBadge=document.getElementById('bonus-badge');
+  if(bonusRow)bonusRow.style.display='';
+  if(bonusBadge)bonusBadge.textContent=spec.icon+' '+spec.name;
+  recalc();updateUI();render();
+  toast(spec.icon+' '+spec.name+' activated!');
+  // Advance AI era
+  AI_S.eraI=S.eraI;
+}
+
+// ═══════════════════════════════════════
+// AI TURN
+// ═══════════════════════════════════════
+function aiTurn(){
+  try{
+  AI_S.eraI=S.eraI;
+
+  // Recalc AI rates
+  let aiWodR=0,aiOilR=0,aiNucR=0,aiSciR=0,aiOilMult=1,aiNucMult=1;
+  const fmAI=ERAS[S.eraI].foodMult;
+  let aiFoodR=0;
+  cells.filter(c=>c.owner==='a').forEach(c=>{
+    const r=hexRates(c);
+    aiOilR+=(r.oil||0);aiNucR+=(r.nuc||0);
+    [c.b1,c.b2].forEach(bid=>{
+      const b=B[bid];if(!b)return;
+      if(b.eff.wodR)aiWodR+=b.eff.wodR;
+      if(b.eff.cerR)aiFoodR+=b.eff.cerR*fmAI*1.5;
+      if(b.eff.meaR)aiFoodR+=b.eff.meaR*fmAI*2.0;
+      if(b.eff.fisR)aiFoodR+=b.eff.fisR*fmAI*2.5;
+      if(b.eff.oilMult&&b.eff.oilMult>aiOilMult)aiOilMult=b.eff.oilMult;
+      if(b.eff.nucMult&&b.eff.nucMult>aiNucMult)aiNucMult=b.eff.nucMult;
+      if(b.eff.sciR)aiSciR+=b.eff.sciR;
+    });
+  });
+  AI_S.wodR=aiWodR;AI_S.oilR=Math.floor(aiOilR*aiOilMult);
+  AI_S.nucR=Math.floor(aiNucR*aiNucMult);AI_S.sciR=aiSciR;
+
+  // Accumulate resources
+  AI_S.wod=Math.max(0,(AI_S.wod||0)+AI_S.wodR);
+  AI_S.oil=Math.max(0,(AI_S.oil||0)+AI_S.oilR);
+  AI_S.nuc=Math.max(0,(AI_S.nuc||0)+AI_S.nucR);
+  AI_S.science=(AI_S.science||0)+AI_S.sciR;
+
+  const aiOwned=cells.filter(c=>c.owner==='a');
+  const settle=ERA_SETTLE[Math.min(AI_S.eraI,ERA_SETTLE.length-1)];
+  const settleCost=B[settle]?.cost?.wod||5;
+  const aiFoodConsume=Math.max(1,Math.floor(AI_S.pop/50));
+  const needFood=aiFoodR<aiFoodConsume*1.5; // needs more food
+  const hasWoodIncome=AI_S.wodR>0;
+
+  // PRIORITY 1: Build logging camp on woods hex (get wood income first)
+  if(!hasWoodIncome){
+    for(const hex of aiOwned){
+      if(hex.t==='woods'&&hex.b1&&!hex.b2&&(AI_S.wod||0)>=5){
+        hex.b2='logcamp';AI_S.wod-=5;
+        const{x,y}=hXY(hex.col,hex.row);spawnParticles(x,y,'🪵',6);
+        return;
+      }
+      // Expand to woods if none owned
+      if(!aiOwned.some(c=>c.t==='woods')){
+        const woodsAdj=nbrs(hex).find(n=>!n.owner&&n.t==='woods');
+        if(woodsAdj&&(AI_S.wod||0)>=2){woodsAdj.owner='a';AI_S.wod-=2;break;}
+      }
+    }
+  }
+
+  // PRIORITY 2: Build food on settled hexes (critical if starving)
+  if(needFood){
+    for(const hex of aiOwned){
+      if(hex.b1&&ERA_SETTLE.includes(hex.b1)&&!hex.b2){
+        if(hex.t==='cer'&&(AI_S.wod||0)>=5){hex.b2='farm';AI_S.wod-=5;const{x,y}=hXY(hex.col,hex.row);spawnParticles(x,y,'🌾',6);return;}
+        if(hex.t==='ani'&&(AI_S.wod||0)>=5){hex.b2='ranch';AI_S.wod-=5;const{x,y}=hXY(hex.col,hex.row);spawnParticles(x,y,'🥩',6);return;}
+        if(hex.t==='jgl'&&(AI_S.wod||0)>=10){hex.b2='gatherer';AI_S.wod-=10;const{x,y}=hXY(hex.col,hex.row);spawnParticles(x,y,'🍌',6);return;}
+      }
+    }
+  }
+
+  // PRIORITY 3: Build settlement on food hex (to enable food building)
+  const goodFoodHex=aiOwned.find(c=>!c.b1&&['cer','ani','jgl'].includes(c.t));
+  if(goodFoodHex&&(AI_S.wod||0)>=settleCost){
+    goodFoodHex.b1=settle;AI_S.wod-=settleCost;
+    const{x,y}=hXY(goodFoodHex.col,goodFoodHex.row);
+    spawnParticles(x,y,B[settle]?.icon||'🏠',6);
+    return;
+  }
+
+  // PRIORITY 4: Build science (every 10 turns if has food surplus)
+  const hasSci=aiOwned.some(c=>[c.b1,c.b2].some(b=>b&&SCIENCE_CHAIN.includes(b)));
+  const sciBuilding=SCIENCE_CHAIN[Math.min(AI_S.eraI,SCIENCE_CHAIN.length-1)];
+  const sciCost=B[sciBuilding]?.cost;
+  const sciEnergy=AI_S.oil*1.5+AI_S.wod;
+  if(!hasSci&&!needFood&&sciCost&&G.turn%10===0){
+    const sciHex=aiOwned.find(c=>c.b1&&ERA_SETTLE.includes(c.b1)&&!c.b2);
+    if(sciHex&&sciEnergy>=sciCost.energy&&(AI_S.fis+AI_S.mea+AI_S.cer||0)>=sciCost.food){
+      sciHex.b2=sciBuilding;
+      const{x,y}=hXY(sciHex.col,sciHex.row);spawnParticles(x,y,B[sciBuilding].icon,6);
+      return;
+    }
+  }
+
+  // PRIORITY 5: Expand to food/resource hex
+  const expandTarget=(() => {
+    for(const src of aiOwned){
+      // Prefer food hexes
+      const food=nbrs(src).find(n=>!n.owner&&['cer','ani','jgl'].includes(n.t));
+      if(food)return food;
+    }
+    for(const src of aiOwned){
+      const any=nbrs(src).find(n=>!n.owner&&n.t!=='sea');
+      if(any)return any;
+    }
+    return null;
+  })();
+  if(expandTarget&&(AI_S.wod||0)>=2){
+    expandTarget.owner='a';AI_S.wod-=2;
+    const{x,y}=hXY(expandTarget.col,expandTarget.row);
+    spawnParticles(x,y,'🔴',5);
+  }
+
+  // PRIORITY 6: Attack if strong enough
+  if(Math.random()<0.25){
+    const aiStr=AI_S.pop*ERAS[AI_S.eraI||0].weapon;
+    const myStr=S.pop*ERAS[S.eraI].weapon;
+    const attackCost=AI_S.eraI<=1?20:AI_S.eraI<=3?10:3;
+    const attackRes=AI_S.eraI<=1?'wod':AI_S.eraI<=3?'oil':'nuc';
+    const winChance=aiStr/(aiStr+myStr);
+    if((AI_S[attackRes]||0)>=attackCost&&winChance>0.4){
+      for(const src of aiOwned){
+        const target=nbrs(src).find(n=>n.owner==='p');
+        if(target){
+          AI_S[attackRes]-=attackCost;
+          const win=Math.random()<winChance;
+          if(win){
+            target.owner='a';
+            const{x,y}=hXY(target.col,target.row);
+            spawnParticles(x,y,'⚔️',8);startFlash(target,'#e05030');
+            showBattleResult('⚔️ Enemy attack! Your hex captured!','#e05030');
+            const settleBid=ERA_SETTLE.find(s=>target.b1===s||target.b2===s);
+            if(settleBid&&B[settleBid]&&S.cap>0){
+              const popLost=Math.floor(S.pop*(B[settleBid].cap/S.cap));
+              S.pop=Math.max(1,S.pop-popLost);
+              toast('⚔️ '+AI.n+' captured your '+B[settleBid].name+'! −'+fmtPop(popLost)+' pop');
+            } else {toast('⚔️ '+AI.n+' captured your hex!');}
+            eraSciRegress();
+          }
+          break;
+        }
+      }
+    }
+  }
+
+  }catch(e){console.error('aiTurn error:',e);toast('💥 aiTurn: '+e.message);}
+}
+
+// ═══════════════════════════════════════
+// END TURN
+// ═══════════════════════════════════════
+function endTurn(){
+  if(G.over)return;
+
+  // Accumulate resources
+  S.cer=Math.max(0,S.cer+S.cerR);
+  S.mea=Math.max(0,S.mea+S.meaR);
+  S.fis=Math.max(0,S.fis+S.fisR);
+  S.wod=Math.max(0,S.wod+S.wodR);
+  S.oil=Math.max(0,S.oil+S.oilR);
+  S.nuc=Math.max(0,S.nuc+S.nucR);
+
+  // Energy consumption
+  const eConsume=energyConsume();
+  const eNet=energyNet();
+  if(eNet<0){
+    const drain=Math.abs(eNet);
+    if(S.nuc>0){S.nuc=Math.max(0,S.nuc-Math.ceil(drain/3));}
+    else if(S.oil>0){S.oil=Math.max(0,S.oil-Math.ceil(drain/1.5));}
+    else{S.wod=Math.max(0,S.wod-drain);}
+  }
+
+  // Science accumulation
+  S.science+=S.sciR;
+  // Science regression check
+  eraSciRegress();
+
+  try{growPop();}catch(e){console.error('growPop crash:',e.message,e.stack);toast('growPop error: '+e.message);}
+  try{aiTurn();}catch(e){console.error('aiTurn crash:',e.message,e.stack);toast('aiTurn error: '+e.message);}
+  // Check win immediately after all population changes
+  if(S.pop>=POP_WIN){showWin(true);return;}
+  if(AI_S.pop>=POP_WIN){showWin(false);return;}
+
+  S.actedThisTurn=false;G.turn++;
+  try{recalc();}catch(e){console.error('recalc crash:',e.message);toast('recalc: '+e.message);}
+  try{updateUI();}catch(e){console.error('updateUI crash:',e.message);toast('updateUI: '+e.message);}
+  try{render();}catch(e){console.error('render crash:',e.message);toast('render: '+e.message);}
+  try{checkEraReady();}catch(e){console.error('checkEraReady crash:',e.message);toast('checkEraReady: '+e.message);}
+  if(AI_S.sciFreeze&&G.turn<=AI_S.sciFreeze){
+    const left=AI_S.sciFreeze-G.turn+1;
+    toast('💻 Enemy science frozen: '+left+' turn'+(left>1?'s':'')+' left');
+  }
+
+  // Win condition
+  if(S.pop>=POP_WIN){showWin(true);return;}
+  if(AI_S.pop>=POP_WIN){showWin(false);return;}
+}
+
+// ═══════════════════════════════════════
+// ERA ADVANCE
+// ═══════════════════════════════════════
+function advanceEra(){
+  S.eraI++;
+  S.science=0;
+  // Auto-unlock new settlement tier
+  const newSettle=ERA_SETTLE[S.eraI];
+  if(newSettle)S.unlockedBuildings.add(newSettle);
+  // Auto-unlock new science building
+  const sciBuildings=['scrip','library','academy','lab','resctr'];
+  const newSci=sciBuildings[S.eraI];
+  if(newSci)S.unlockedBuildings.add(newSci);
+  if(S.eraI>=4)S.unlockedBuildings.add('nuclear');
+  AI_S.eraI=S.eraI;
+  G.pathPending=true;
+  setTimeout(showSpecChoice,400);
+}
+
+// ═══════════════════════════════════════
+// WIN
+// ═══════════════════════════════════════
+function showWin(playerWon){
+  G.over=true;
+  document.getElementById('win-title').textContent=playerWon?'🏆 Victory!':'💀 Defeated!';
+  document.getElementById('win-sub').textContent=playerWon?
+    `${PL.f} ${PL.n} reached 1 Million people in ${G.turn} turns!`:
+    `${AI.f} ${AI.n} reached 1 Million people first.`;
+  document.getElementById('win-wrap').classList.add('on');
+}
+
+// ═══════════════════════════════════════
+// UI UPDATE
+// ═══════════════════════════════════════
+function updateUI(){
+  document.getElementById('h-turn').textContent=G.turn;
+
+  // Pop bars
+  const pPct=Math.min(100,S.pop/POP_WIN*100);
+  const aPct=Math.min(100,AI_S.pop/POP_WIN*100);
+  const capPPct=Math.min(100,S.cap/POP_WIN*100);
+  const capAPct=Math.min(100,AI_S.cap/POP_WIN*100);
+  document.getElementById('pop-p').textContent=fmtPopRound(S.pop);
+  document.getElementById('pop-a').textContent=fmtPopRound(AI_S.pop);
+  document.getElementById('cap-p').textContent=fmtPopRound(S.cap);
+  document.getElementById('cap-a').textContent=fmtPopRound(AI_S.cap);
+  document.getElementById('pop-bar-p').style.width=pPct+'%';
+  document.getElementById('pop-bar-a').style.width=aPct+'%';
+  document.getElementById('cap-bar-p').style.width=capPPct+'%';
+  document.getElementById('cap-bar-a').style.width=capAPct+'%';
+
+  // Era
+  const era=ERAS[S.eraI];
+  document.getElementById('era-name').textContent='Era '+(S.eraI+1)+' — '+era.name;
+  document.getElementById('era-name-a').textContent='Era '+(AI_S.eraI+1)+' — '+ERAS[AI_S.eraI||0].name;
+  document.getElementById('era-pct').textContent='';
+  // Resources
+  document.getElementById('r-cer').textContent=Math.floor(S.cer);
+  document.getElementById('r-mea').textContent=Math.floor(S.mea);
+  document.getElementById('r-fis').textContent=Math.floor(S.fis);
+  const fn=foodNet();
+  const netEl=document.getElementById('r-net');
+  netEl.textContent=(fn>=0?'+':'')+fn+'/t';
+  netEl.style.color=fn>0?'#2ecc71':fn<0?'#e74c3c':'#f0b429';
+  document.getElementById('r-wod').textContent=Math.floor(S.wod);
+  document.getElementById('r-oil').textContent=Math.floor(S.oil);
+  document.getElementById('r-nuc').textContent=Math.floor(S.nuc);
+  const en=energyNet();
+  const enetEl=document.getElementById('r-enet');
+  enetEl.textContent=(en>=0?'+':'')+en+'/t';
+  enetEl.style.color=en>0?'#2ecc71':en<0?'#e74c3c':'#f0b429';
+
+  // Trade button
+  const tradeBtn=document.getElementById('btn-trade');
+  const tradeRatio=S.bonus.marketBonus?2:10;
+  const hasResources=S.wod>=tradeRatio||S.oil>=tradeRatio||S.cer>=tradeRatio||S.mea>=tradeRatio||S.fis>=tradeRatio;
+  tradeBtn.style.display=hasResources?'block':'none';
+
+  // Bonus row
+  if(S.specHistory.length>0){
+    const br=document.getElementById('bonus-row');if(br)br.style.display='';
+  }
+}
+
+// ═══════════════════════════════════════
+// INPUT
+// ═══════════════════════════════════════
+function handleTap(mx,my){
+  if(G.over)return;
+  const c=nearCell(mx,my);
+  if(!c){hideHexPopup();return;}
+  if(c===selCell){hideHexPopup();return;}
+  selCell=c;
+  render();
+  updateCtxActions(c);
+}
+
+cv.addEventListener('click',e=>{
+  const r=cv.getBoundingClientRect();
+  handleTap((e.clientX-r.left)*cv.width/r.width,(e.clientY-r.top)*cv.height/r.height);
+});
+cv.addEventListener('touchend',e=>{
+  e.preventDefault();
+  const t=e.changedTouches[0];
+  const r=cv.getBoundingClientRect();
+  handleTap((t.clientX-r.left)*cv.width/r.width,(t.clientY-r.top)*cv.height/r.height);
+},{passive:false});
+
+document.addEventListener('click',e=>{
+  const popup=document.getElementById('hex-popup');
+  if(!popup.contains(e.target)&&e.target!==cv){hideHexPopup();}
+});
+
+window.addEventListener('resize',resize);
+
+// ═══════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════
+function initGame(){
+  pickSpecies();
+  cells=genMap();
+  const p0=cAt(2,1);if(p0){p0.owner='p';p0.b1='camp';p0.b2='farm';}
+  const a0=cAt(8,7);if(a0){a0.owner='a';a0.b1='camp';a0.b2='farm';}
+  document.getElementById('pop-p-lbl').textContent=PL.f+' '+PL.n;
+  document.getElementById('pop-a-lbl').textContent=AI.f+' '+AI.n;
+  document.getElementById('pop-p-lbl').style.color=PL.c;
+  document.getElementById('pop-a-lbl').style.color=AI.c;
+  recalc();resize();updateUI();
+  toast(PL.f+' '+PL.n+' vs '+AI.f+' '+AI.n+' — Race to 1M!');
+}
+
+function newGame(){
+  Object.assign(S,{
+    cer:0,mea:0,fis:0,cerR:0,meaR:0,fisR:0,
+    wod:20,oil:0,nuc:0,wodR:0,oilR:0,nucR:0,
+    science:0,sciR:0,pop:10,cap:0,eraI:0,
+    actedThisTurn:false,specHistory:[],
+    unlockedBuildings:new Set(['camp','farm','logcamp','scrip','gatherer']),
+    bonus:{attackAlways:false,coastalExpand:false,navalBombard:false,
+    pastoralism:false,fertilizer:false,pathfinding:false,airStrike:false,
+           tankBonus:false,industrialBonus:false,cyberAttack:false,marketBonus:false,
+           nuclearArsenal:false,domeShield:false,espionage:false,airStrike:false,coastalExpand:false,navalBombard:false,
+           pastoralism:false,fertilizer:false,pathfinding:false},
+    cyberCooldown:0,domeAnchor:null,
+  });
+  Object.assign(AI_S,{pop:10,cap:0,eraI:0,science:0,sciR:0,wod:20,oil:0,nuc:0,wodR:0,oilR:0,nucR:0,sciFreeze:0,unlockedSettle:'camp'});
+  Object.assign(G,{turn:1,over:false,pathPending:false,finalRound:false,finalDone:false,id:(G.id||0)+1});
+  selCell=null;
+  document.getElementById('final-badge').classList.remove('on');
+  document.getElementById('win-wrap').classList.remove('on');
+  document.getElementById('spec-wrap').classList.remove('on');
+  document.getElementById('build-wrap').classList.remove('on');
+  const br2=document.getElementById('bonus-row');if(br2)br2.style.display='none';
+  initGame();
+}
+
+setTimeout(initGame,100);
+</script>
+</body>
+</html>
